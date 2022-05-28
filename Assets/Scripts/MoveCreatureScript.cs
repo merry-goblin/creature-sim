@@ -12,36 +12,42 @@ using GeneticSharp.Domain.Terminations;
 
 public class MoveCreatureScript : MonoBehaviour
 {
-    public GameObject creature;
+    public GameObject creatureGameObject;
     public GameObject headRotation;
     public GameObject head;
 
     public float creatureStepRotationY = 45.0f;
     public float headStepRotationY = 180.0f;
+    public float creatureSpeed = 20.0f;
 
     private NeuralNetwork neuralNetwork;
 
+    private Simulation simulation;
+
+    //  Rotation
     private float creatureRotationModifier = 1.0f;
-    private float headRotationModifier = 1.0f;
+    //private float headRotationModifier = 1.0f;
+
+    //  Movement
+    private float creatureSpeedDirection = 1.0f;
 
     // Start is called before the first frame update
     void Start()
     {
-        this.neuralNetwork = new NeuralNetwork(2, 2, 4, 5, true);
-        this.neuralNetwork.inputLayer[0].outputValue = 0.25f;
-        this.neuralNetwork.inputLayer[1].outputValue = -0.5f;
+        this.InitSimulation();
 
-        this.neuralNetwork.CalculateOutput();
+        /*this.neuralNetwork.CalculateOutput();
         Debug.Log(this.neuralNetwork.Debug());
 
         this.creatureRotationModifier = this.neuralNetwork.outputLayer[0].outputValue;
-        this.headRotationModifier = this.neuralNetwork.outputLayer[1].outputValue;
+        //this.headRotationModifier = this.neuralNetwork.outputLayer[1].outputValue;
+        this.creatureSpeedDirection = this.neuralNetwork.outputLayer[1].outputValue;
 
-        Debug.Log("output1: "+this.neuralNetwork.outputLayer[0].outputValue+", output2: " + this.neuralNetwork.outputLayer[1].outputValue);
+        Debug.Log("output1: "+this.neuralNetwork.outputLayer[0].outputValue+", output2: " + this.neuralNetwork.outputLayer[1].outputValue + ", output3: " + this.neuralNetwork.outputLayer[2].outputValue);
+        */
+        /*DirectionProgram program = new DirectionProgram();
 
-        DirectionProgram program = new DirectionProgram();
-
-        program.Start();
+        program.Start();*/
 
         /*AdditionProgram program = new AdditionProgram();
 
@@ -65,13 +71,31 @@ public class MoveCreatureScript : MonoBehaviour
         Debug.Log(String.Concat("Best solution found is X:", bestChromosome.X.ToString(), " Y:", bestChromosome.Y.ToString(), " with ", bestChromosome.Fitness.ToString(), " fitness."));*/
     }
 
+    private void InitSimulation()
+    {
+        simulation = new Simulation(Simulation.ManualPlayMode);
+
+        Creature creature = this.BuildACreature();
+        simulation.AddCreature(creature);
+    }
+
+    private Creature BuildACreature()
+    {
+        NeuralNetwork neuralNetwork = new NeuralNetwork(2, 2, 4, 5, true);
+        neuralNetwork.inputLayer[0].outputValue = 0.25f;
+        neuralNetwork.inputLayer[1].outputValue = -0.5f;
+
+        return new Creature(this.creatureGameObject, neuralNetwork);
+    }
+
     // Update is called once per frame
     void Update()
     {
         Vector3 headRotationCenter = this.headRotation.transform.position;
         Vector3 headOffset = new Vector3(1.5f, 0.0f, 0.0f);
 
-        this.creature.transform.Rotate(0.0f, this.creatureStepRotationY * this.creatureRotationModifier * Time.deltaTime, 0.0f, Space.Self);
-        this.head.transform.RotateAround(headRotationCenter, Vector3.up, this.headStepRotationY * this.headRotationModifier * Time.deltaTime);
+        this.creatureGameObject.transform.Rotate(0.0f, this.creatureStepRotationY * this.creatureRotationModifier * Time.deltaTime, 0.0f, Space.Self);
+        this.creatureGameObject.transform.Translate(Vector3.forward * Time.deltaTime * this.creatureSpeedDirection * this.creatureSpeed, Space.Self);
+        //this.head.transform.RotateAround(headRotationCenter, Vector3.up, this.headStepRotationY * this.headRotationModifier * Time.deltaTime);
     }
 }
