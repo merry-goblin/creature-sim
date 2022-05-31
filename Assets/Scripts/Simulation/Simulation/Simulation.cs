@@ -1,25 +1,25 @@
 
 using System.Collections.Generic;
 
-public class Simulation
+public class Simulation : ISimulation
 {
     public const int AutoPlayMode = 1;
     public const int ManualPlayMode = 2;
 
     protected int playMode;
 
-    public List<Creature> creatureList;
+    public List<ISubject> subjectList;
 
     public Simulation(int playMode = Simulation.AutoPlayMode)
     {
         this.playMode = playMode;
 
-        this.creatureList = new List<Creature>();
+        this.subjectList = new List<ISubject>();
     }
 
-    public void AddCreature(Creature creature)
+    public void AddSubject(ISubject subject)
     {
-        creatureList.Add(creature);
+        subjectList.Add(subject);
     }
 
 }

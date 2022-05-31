@@ -37,13 +37,13 @@ public class MoveCreatureScript : MonoBehaviour
         this.InitSimulation();
 
         /*this.neuralNetwork.CalculateOutput();
-        Debug.Log(this.neuralNetwork.Debug());
+        Debug.Log(this.neuralNetwork.Debug());*/
 
-        this.creatureRotationModifier = this.neuralNetwork.outputLayer[0].outputValue;
+        /*this.creatureRotationModifier = this.neuralNetwork.outputLayer[0].outputValue;
         //this.headRotationModifier = this.neuralNetwork.outputLayer[1].outputValue;
-        this.creatureSpeedDirection = this.neuralNetwork.outputLayer[1].outputValue;
+        this.creatureSpeedDirection = this.neuralNetwork.outputLayer[1].outputValue;*/
 
-        Debug.Log("output1: "+this.neuralNetwork.outputLayer[0].outputValue+", output2: " + this.neuralNetwork.outputLayer[1].outputValue + ", output3: " + this.neuralNetwork.outputLayer[2].outputValue);
+        /*Debug.Log("output1: "+this.neuralNetwork.outputLayer[0].outputValue+", output2: " + this.neuralNetwork.outputLayer[1].outputValue + ", output3: " + this.neuralNetwork.outputLayer[2].outputValue);
         */
         /*DirectionProgram program = new DirectionProgram();
 
@@ -76,7 +76,7 @@ public class MoveCreatureScript : MonoBehaviour
         simulation = new Simulation(Simulation.ManualPlayMode);
 
         Creature creature = this.BuildACreature();
-        simulation.AddCreature(creature);
+        simulation.AddSubject(creature);
     }
 
     private Creature BuildACreature()

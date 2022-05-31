@@ -1,7 +1,7 @@
 
 using UnityEngine;
 
-public class Creature
+public class Creature : ISubject
 {
     protected GameObject gameObject;
     protected NeuralNetwork neuralNetwork;
