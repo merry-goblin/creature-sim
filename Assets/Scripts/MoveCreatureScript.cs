@@ -20,8 +20,6 @@ public class MoveCreatureScript : MonoBehaviour
     public float headStepRotationY = 180.0f;
     public float creatureSpeed = 20.0f;
 
-    private NeuralNetwork neuralNetwork;
-
     private Simulation simulation;
 
     //  Rotation
@@ -73,10 +71,10 @@ public class MoveCreatureScript : MonoBehaviour
 
     private void InitSimulation()
     {
-        simulation = new Simulation(Simulation.ManualPlayMode);
+        this.simulation = new Simulation(Simulation.ManualPlayMode);
 
         Creature creature = this.BuildACreature();
-        simulation.AddSubject(creature);
+        this.simulation.AddSubject(creature);
     }
 
     private Creature BuildACreature()
@@ -91,6 +89,16 @@ public class MoveCreatureScript : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        this.simulation.Calculate();
+
+        ISubject creature = this.simulation.subjectList[0];
+
+        List<float> outputValues = creature.GetOutput();
+        this.creatureRotationModifier = outputValues[0];
+        this.creatureSpeedDirection = outputValues[1];
+
+        Debug.Log("0: " + outputValues[0] + "; 1: " + outputValues[1]);
+
         Vector3 headRotationCenter = this.headRotation.transform.position;
         Vector3 headOffset = new Vector3(1.5f, 0.0f, 0.0f);
 

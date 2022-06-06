@@ -1,4 +1,6 @@
-
+using System;
+using System.Collections;
+using System.Collections.Generic;
 using UnityEngine;
 
 public class Creature : ISubject
@@ -10,5 +12,15 @@ public class Creature : ISubject
     {
         this.gameObject = gameObject;
         this.neuralNetwork = neuralNetwork;
+    }
+
+    public void CalculateOutput()
+    {
+        this.neuralNetwork.CalculateOutput();
+    }
+
+    public List<float> GetOutput()
+    {
+        return this.neuralNetwork.GetOutputValues();
     }
 }

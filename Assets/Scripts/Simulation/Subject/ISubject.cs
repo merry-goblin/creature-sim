@@ -6,5 +6,7 @@ using System.Threading.Tasks;
 
 public interface ISubject
 {
+    public List<float> GetOutput();
 
+    public void CalculateOutput();
 }

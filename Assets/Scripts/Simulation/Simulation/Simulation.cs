@@ -19,7 +19,14 @@ public class Simulation : ISimulation
 
     public void AddSubject(ISubject subject)
     {
-        subjectList.Add(subject);
+        this.subjectList.Add(subject);
     }
 
+    public void Calculate()
+    {
+        for (int i=0, nb=subjectList.Count; i < nb; i++)
+        {
+            this.subjectList[i].CalculateOutput();
+        }
+    }
 }

@@ -65,6 +65,18 @@ public class NeuralNetwork
         this.CalculateLayerOutput(ref this.outputLayer);
     }
 
+    public List<float> GetOutputValues()
+    {
+        List<float> outputValues = new List<float>();
+
+        for (int i=0, nb=this.outputLayer.Length; i < nb; i++)
+        {
+            outputValues.Add(this.outputLayer[i].outputValue);
+        }
+
+        return outputValues;
+    }
+
     public string Debug()
     {
         string debug = "bias.outputValue: " + this.bias.outputValue + ". " +
