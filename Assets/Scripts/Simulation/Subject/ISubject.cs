@@ -8,5 +8,5 @@ public interface ISubject
 {
     public List<float> GetOutput();
 
-    public void CalculateOutput();
+    public void Update();
 }

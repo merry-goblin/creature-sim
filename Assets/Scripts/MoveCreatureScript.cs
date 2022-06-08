@@ -22,13 +22,6 @@ public class MoveCreatureScript : MonoBehaviour
 
     private Simulation simulation;
 
-    //  Rotation
-    private float creatureRotationModifier = 1.0f;
-    //private float headRotationModifier = 1.0f;
-
-    //  Movement
-    private float creatureSpeedDirection = 1.0f;
-
     // Start is called before the first frame update
     void Start()
     {
@@ -89,21 +82,15 @@ public class MoveCreatureScript : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        this.simulation.Calculate();
+        this.simulation.Update();
 
-        ISubject creature = this.simulation.subjectList[0];
+        //ISubject creature = this.simulation.subjectList[0];
 
-        List<float> outputValues = creature.GetOutput();
-        this.creatureRotationModifier = outputValues[0];
-        this.creatureSpeedDirection = outputValues[1];
-
-        Debug.Log("0: " + outputValues[0] + "; 1: " + outputValues[1]);
-
-        Vector3 headRotationCenter = this.headRotation.transform.position;
+        /*Vector3 headRotationCenter = this.headRotation.transform.position;
         Vector3 headOffset = new Vector3(1.5f, 0.0f, 0.0f);
 
         this.creatureGameObject.transform.Rotate(0.0f, this.creatureStepRotationY * this.creatureRotationModifier * Time.deltaTime, 0.0f, Space.Self);
         this.creatureGameObject.transform.Translate(Vector3.forward * Time.deltaTime * this.creatureSpeedDirection * this.creatureSpeed, Space.Self);
-        //this.head.transform.RotateAround(headRotationCenter, Vector3.up, this.headStepRotationY * this.headRotationModifier * Time.deltaTime);
+        //this.head.transform.RotateAround(headRotationCenter, Vector3.up, this.headStepRotationY * this.headRotationModifier * Time.deltaTime);*/
     }
 }

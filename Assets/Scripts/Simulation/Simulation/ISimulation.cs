@@ -8,5 +8,5 @@ public interface ISimulation
 {
     void AddSubject(ISubject subject);
 
-    void Calculate();
+    void Update();
 }

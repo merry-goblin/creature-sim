@@ -22,11 +22,11 @@ public class Simulation : ISimulation
         this.subjectList.Add(subject);
     }
 
-    public void Calculate()
+    public void Update()
     {
         for (int i=0, nb=subjectList.Count; i < nb; i++)
         {
-            this.subjectList[i].CalculateOutput();
+            this.subjectList[i].Update();
         }
     }
 }
