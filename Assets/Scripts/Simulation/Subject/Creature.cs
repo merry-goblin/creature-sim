@@ -5,15 +5,15 @@ using UnityEngine;
 
 public class Creature : ISubject
 {
-    protected GameObject subjecGameObject;
+    protected GameObject subjectGameObject;
     protected NeuralNetwork neuralNetwork;
 
     protected float subjectRotationModifier = 45.0f;
     protected float subjectSpeedModifier = 20.0f;
 
-    public Creature(GameObject gameObject, NeuralNetwork neuralNetwork)
+    public Creature(GameObject subjectPrefab, NeuralNetwork neuralNetwork)
     {
-        this.subjecGameObject = gameObject;
+        this.subjectGameObject = UnityEngine.Object.Instantiate(subjectPrefab, new Vector3(0, 0, 0), Quaternion.identity); ;
         this.neuralNetwork = neuralNetwork;
     }
 
@@ -40,7 +40,7 @@ public class Creature : ISubject
         float subjectRotation = outputList[0];
         float subjectSpeed = outputList[1];
 
-        this.subjecGameObject.transform.Rotate(0.0f, subjectRotation * Time.deltaTime * this.subjectRotationModifier, 0.0f, Space.Self);
-        this.subjecGameObject.transform.Translate(Vector3.forward * subjectSpeed * Time.deltaTime * this.subjectSpeedModifier, Space.Self);
+        this.subjectGameObject.transform.Rotate(0.0f, subjectRotation * Time.deltaTime * this.subjectRotationModifier, 0.0f, Space.Self);
+        this.subjectGameObject.transform.Translate(Vector3.forward * subjectSpeed * Time.deltaTime * this.subjectSpeedModifier, Space.Self);
     }
 }

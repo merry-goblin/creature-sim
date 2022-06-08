@@ -12,9 +12,8 @@ using GeneticSharp.Domain.Terminations;
 
 public class MoveCreatureScript : MonoBehaviour
 {
-    public GameObject creatureGameObject;
-    public GameObject headRotation;
-    public GameObject head;
+    public GameObject creaturePrefab;
+    public GameObject foodPrefab;
 
     public float creatureStepRotationY = 45.0f;
     public float headStepRotationY = 180.0f;
@@ -76,7 +75,9 @@ public class MoveCreatureScript : MonoBehaviour
         neuralNetwork.inputLayer[0].outputValue = 0.25f;
         neuralNetwork.inputLayer[1].outputValue = -0.5f;
 
-        return new Creature(this.creatureGameObject, neuralNetwork);
+        //GameObject creature = Instantiate(this.creaturePrefab, new Vector3(0, 0, 0), Quaternion.identity);
+
+        return new Creature(this.creaturePrefab, neuralNetwork);
     }
 
     // Update is called once per frame

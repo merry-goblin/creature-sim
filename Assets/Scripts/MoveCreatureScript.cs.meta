@@ -3,7 +3,9 @@ guid: 18b06b794aef2dc438d6d0f14b5b1000
 MonoImporter:
   externalObjects: {}
   serializedVersion: 2
-  defaultReferences: []
+  defaultReferences:
+  - creaturePrefab: {fileID: 2360763811440135954, guid: 995158b832aa191409a2a92a5237b765, type: 3}
+  - foodPrefab: {fileID: 207930423480200758, guid: 94d2e3b509e472b4aa74b82abbbdf804, type: 3}
   executionOrder: 0
   icon: {instanceID: 0}
   userData: 
