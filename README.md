@@ -1,0 +1,12 @@
+Creature Sim
+========================
+
+[Github](https://github.com/merry-goblin/creature-sim)
+
+### Purpose
+
+The main purpose of this simulation is to see effecient behaviors to emerge on their own thanks to evolution
+
+### Description
+
+Wait for it
