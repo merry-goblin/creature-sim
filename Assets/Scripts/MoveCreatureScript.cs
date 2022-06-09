@@ -2,6 +2,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 using GeneticSharp.Domain;
 using GeneticSharp.Domain.Crossovers;
@@ -63,6 +64,8 @@ public class MoveCreatureScript : MonoBehaviour
 
     private void InitSimulation()
     {
+        //SceneManager.LoadScene("SceneToLoad", LoadSceneMode.Single);
+
         this.simulation = new Simulation(Simulation.ManualPlayMode);
 
         World world = this.BuildAWorld();
@@ -84,8 +87,6 @@ public class MoveCreatureScript : MonoBehaviour
         NeuralNetwork neuralNetwork = new NeuralNetwork(2, 2, 4, 5, true);
         neuralNetwork.inputLayer[0].outputValue = 0.25f;
         neuralNetwork.inputLayer[1].outputValue = -0.5f;
-
-        //GameObject creature = Instantiate(this.creaturePrefab, new Vector3(0, 0, 0), Quaternion.identity);
 
         return new Creature(this.creaturePrefab, neuralNetwork);
     }
