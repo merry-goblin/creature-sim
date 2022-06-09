@@ -8,25 +8,25 @@ public class Simulation : ISimulation
 
     protected int playMode;
 
-    public List<ISubject> subjectList;
+    public List<IWorld> worldList;
 
     public Simulation(int playMode = Simulation.AutoPlayMode)
     {
         this.playMode = playMode;
 
-        this.subjectList = new List<ISubject>();
+        this.worldList = new List<IWorld>();
     }
 
-    public void AddSubject(ISubject subject)
+    public void AddWorld(IWorld world)
     {
-        this.subjectList.Add(subject);
+        this.worldList.Add(world);
     }
 
     public void Update()
     {
-        for (int i=0, nb=subjectList.Count; i < nb; i++)
+        for (int i=0, nb=worldList.Count; i < nb; i++)
         {
-            this.subjectList[i].Update();
+            this.worldList[i].Update();
         }
     }
 }

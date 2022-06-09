@@ -65,8 +65,18 @@ public class MoveCreatureScript : MonoBehaviour
     {
         this.simulation = new Simulation(Simulation.ManualPlayMode);
 
+        World world = this.BuildAWorld();
+        this.simulation.AddWorld(world);
+    }
+
+    private World BuildAWorld()
+    {
+        World world = new World();
+
         Creature creature = this.BuildACreature();
-        this.simulation.AddSubject(creature);
+        world.AddSubject(creature);
+
+        return world;
     }
 
     private Creature BuildACreature()
