@@ -20,7 +20,7 @@ public class MoveCreatureScript : MonoBehaviour
     public float headStepRotationY = 180.0f;
     public float creatureSpeed = 20.0f;
 
-    private Simulation simulation;
+    private SampleSimulation1 simulation;
 
     // Start is called before the first frame update
     void Start()
@@ -66,29 +66,10 @@ public class MoveCreatureScript : MonoBehaviour
     {
         //SceneManager.LoadScene("SceneToLoad", LoadSceneMode.Single);
 
-        this.simulation = new Simulation(Simulation.ManualPlayMode);
+        SampleWorld1.addPrefabs(this.creaturePrefab, this.foodPrefab);
 
-        World world = this.BuildAWorld();
-        this.simulation.AddWorld(world);
-    }
-
-    private World BuildAWorld()
-    {
-        World world = new World();
-
-        Creature creature = this.BuildACreature();
-        world.AddSubject(creature);
-
-        return world;
-    }
-
-    private Creature BuildACreature()
-    {
-        NeuralNetwork neuralNetwork = new NeuralNetwork(2, 2, 4, 5, true);
-        neuralNetwork.inputLayer[0].outputValue = 0.25f;
-        neuralNetwork.inputLayer[1].outputValue = -0.5f;
-
-        return new Creature(this.creaturePrefab, neuralNetwork);
+        this.simulation = new SampleSimulation1(SampleSimulation1.ManualPlayMode);
+        this.simulation.Load();
     }
 
     // Update is called once per frame

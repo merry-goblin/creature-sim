@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 public interface ISimulation
 {
-    void AddWorld(IWorld world);
+    void Load();
 
     void Update();
 }

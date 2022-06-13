@@ -1,16 +1,16 @@
 ﻿
 using System.Collections.Generic;
 
-public class World : IWorld
+public abstract class AbstractWorld
 {
     public List<ISubject> subjectList;
-
-    public World()
+    
+    public virtual void Load()
     {
-        this.subjectList = new List<ISubject>();
+
     }
 
-    public void AddSubject(ISubject subject)
+    protected void AddSubject(ISubject subject)
     {
         this.subjectList.Add(subject);
     }

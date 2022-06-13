@@ -1,7 +1,7 @@
 ﻿
 public interface IWorld
 {
-    void AddSubject(ISubject subject);
+    void Load();
 
     void Update();
 }
