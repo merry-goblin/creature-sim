@@ -1,10 +1,10 @@
 
 using System.Collections.Generic;
 
-public class SampleSimulation1 : AbstractSimulation, ISimulation
+public class SimulationSample1 : AbstractSimulation, ISimulation
 {
 
-    public SampleSimulation1(int playMode = SampleSimulation1.AutoPlayMode)
+    public SimulationSample1(int playMode = SimulationSample1.AutoPlayMode)
     {
         this.playMode = playMode;
 
@@ -13,7 +13,7 @@ public class SampleSimulation1 : AbstractSimulation, ISimulation
 
     public override void Load()
     {
-        SampleWorld1 world = new SampleWorld1();
+        WorldSample1 world = new WorldSample1();
 
         this.AddWorld(world);
 

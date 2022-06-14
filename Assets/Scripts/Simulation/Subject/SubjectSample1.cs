@@ -1,38 +1,19 @@
-
+﻿
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Creature : ISubject
+class SubjectSample1 : AbstractSubject, ISubject
 {
-    protected GameObject subjectGameObject;
-    protected NeuralNetwork neuralNetwork;
-
     protected float subjectRotationModifier = 45.0f;
     protected float subjectSpeedModifier = 20.0f;
 
-    public Creature(GameObject subjectPrefab, NeuralNetwork neuralNetwork)
+    public SubjectSample1(GameObject subjectPrefab, NeuralNetwork neuralNetwork)
     {
         this.subjectGameObject = UnityEngine.Object.Instantiate(subjectPrefab, new Vector3(0, 0, 0), Quaternion.identity); ;
         this.neuralNetwork = neuralNetwork;
     }
 
-    public void Update()
-    {
-        this.CalculateOutput();
-        this.ApplyOutputOnSubject();
-    }
-
-    public List<float> GetOutput()
-    {
-        return this.neuralNetwork.GetOutputValues();
-    }
-
-    protected void CalculateOutput()
-    {
-        this.neuralNetwork.CalculateOutput();
-    }
-
-    protected void ApplyOutputOnSubject()
+    protected override void ApplyOutput()
     {
         List<float> outputList = this.GetOutput();
 
