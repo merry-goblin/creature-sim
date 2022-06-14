@@ -4,6 +4,7 @@ using System;
 using GeneticSharp.Domain;
 using GeneticSharp.Domain.Chromosomes;
 using GeneticSharp.Domain.Populations;
+using GeneticSharp.Domain.Fitnesses;
 using GeneticSharp.Domain.Selections;
 using GeneticSharp.Domain.Crossovers;
 using GeneticSharp.Domain.Mutations;
@@ -19,12 +20,19 @@ public class AlgorithmSample1
 
     private IChromosome chromosome;
     private IPopulation population;
+    private IFitness fitness;
+    private ISelection selection;
+    private ICrossover crossover;
+    private IMutation mutation;
 
     public AlgorithmSample1()
     {
         this.InitChromosome();
         this.InitPopulation();
-
+        this.InitFitness();
+        this.InitSelection();
+        this.InitCrossover();
+        this.InitMutation();
     }
 
     private void InitChromosome()
@@ -44,17 +52,38 @@ public class AlgorithmSample1
             decimalArray[i] = 2;
         }
 
-        this.chromosome = new FloatingPointChromosome(
+        this.chromosome = new ChromosomeSample1(
             minArray,
             maxArray,
             bitArray,
-            decimalArray
+            decimalArray,
+            null
         );
     }
 
     private void InitPopulation()
     {
         this.population = new Population(50, 50, this.chromosome);
+    }
+
+    private void InitFitness()
+    {
+        this.fitness = new FitnessSample1();
+    }
+
+    private void InitSelection()
+    {
+        this.selection = new RouletteWheelSelection();
+    }
+
+    private void InitCrossover()
+    {
+        this.crossover = new UniformCrossover();
+    }
+
+    private void InitMutation()
+    {
+        this.mutation = new FlipBitMutation();
     }
 
     private int getNbSynapses()

@@ -7,7 +7,7 @@ public class FitnessSample1 : IFitness
 {
 	public double Evaluate(IChromosome chromosome)
 	{
-		double eval = 0.0; // tddo
+		double eval = (double)chromosome.Fitness;
 
 		return eval;
 	}
