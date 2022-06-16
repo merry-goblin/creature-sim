@@ -24,6 +24,8 @@ public class AlgorithmSample1
     private ISelection selection;
     private ICrossover crossover;
     private IMutation mutation;
+    private ITermination termination;
+    private GeneticAlgorithm geneticAlgorithm;
 
     public AlgorithmSample1()
     {
@@ -33,6 +35,27 @@ public class AlgorithmSample1
         this.InitSelection();
         this.InitCrossover();
         this.InitMutation();
+        this.InitTermination();
+
+        this.geneticAlgorithm = new GeneticAlgorithm(
+            population,
+            fitness,
+            selection,
+            crossover,
+            mutation
+        );
+        this.geneticAlgorithm.Termination = termination;
+
+    }
+
+    public double Start()
+    {
+        this.geneticAlgorithm.Start();
+
+        ChromosomeSample1 bestChromosome = this.geneticAlgorithm.BestChromosome as ChromosomeSample1;
+        double bestFitness = bestChromosome.Fitness.Value;
+
+        return bestFitness;
     }
 
     private void InitChromosome()
@@ -84,6 +107,11 @@ public class AlgorithmSample1
     private void InitMutation()
     {
         this.mutation = new FlipBitMutation();
+    }
+
+    private void InitTermination()
+    {
+        this.termination = new GenerationNumberTermination(1);
     }
 
     private int getNbSynapses()

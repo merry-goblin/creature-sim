@@ -7,7 +7,9 @@ public class FitnessSample1 : IFitness
 {
 	public double Evaluate(IChromosome chromosome)
 	{
-		double eval = (double)chromosome.Fitness;
+		ChromosomeSample1 c = chromosome as ChromosomeSample1;
+
+		double eval = c.lifespan;
 
 		return eval;
 	}
