@@ -16,6 +16,8 @@ class SubjectSample1 : AbstractSubject, ISubject
     protected float subjectRotationModifier = 45.0f;
     protected float subjectSpeedModifier = 20.0f;
 
+    protected float energy = 100.0f;
+
     public SubjectSample1()
     {
     }
@@ -51,12 +53,24 @@ class SubjectSample1 : AbstractSubject, ISubject
 
     protected override void ApplyOutput()
     {
-        List<float> outputList = this.GetOutput();
+        Debug.Log(this.energy);
 
-        float subjectRotation = outputList[0];
-        float subjectSpeed = outputList[1];
+        if (this.energy > 0)
+        {
+            List<float> outputList = this.GetOutput();
 
-        this.gameObject.transform.Rotate(0.0f, subjectRotation * Time.deltaTime * this.subjectRotationModifier, 0.0f, Space.Self);
-        this.gameObject.transform.Translate(Vector3.forward * subjectSpeed * Time.deltaTime * this.subjectSpeedModifier, Space.Self);
+            float subjectRotation = outputList[0];
+            float subjectSpeed = outputList[1];
+
+            this.gameObject.transform.Rotate(0.0f, subjectRotation * Time.deltaTime * this.subjectRotationModifier, 0.0f, Space.Self);
+            this.gameObject.transform.Translate(Vector3.forward * subjectSpeed * Time.deltaTime * this.subjectSpeedModifier, Space.Self);
+
+            float consomption = (Math.Abs(subjectSpeed) + Math.Abs(subjectRotation) / 2) * Time.deltaTime * 5;
+            this.energy -= consomption;
+            if (this.energy < 0)
+            {
+                this.energy = 0;
+            }
+        }
     }
 }
