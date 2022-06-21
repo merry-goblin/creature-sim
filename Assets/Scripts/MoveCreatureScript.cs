@@ -68,7 +68,8 @@ public class MoveCreatureScript : MonoBehaviour
     {
         //SceneManager.LoadScene("SceneToLoad", LoadSceneMode.Single);
 
-        WorldSample1.addPrefabs(this.creaturePrefab, this.foodPrefab);
+        SubjectSample1.addPrefab(this.creaturePrefab);
+        FoodSample1.addPrefab(this.foodPrefab);
 
         this.simulation = new SimulationSample1(SimulationSample1.ManualPlayMode);
         this.simulation.Load();

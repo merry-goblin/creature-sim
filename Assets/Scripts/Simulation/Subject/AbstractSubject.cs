@@ -4,10 +4,15 @@ using UnityEngine;
 
 public abstract class AbstractSubject
 {
-    protected GameObject subjectGameObject;
+    protected GameObject gameObject;
     protected NeuralNetwork neuralNetwork;
 
-    public void Update()
+    public virtual void Load()
+    {
+
+    }
+
+    public virtual void Update()
     {
         this.CalculateOutput();
         this.ApplyOutput();
