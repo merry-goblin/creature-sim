@@ -8,8 +8,11 @@ class FoodSample1 : AbstractElement, IElement
     protected static GameObject prefab;
     protected static bool prefabIsLoaded = false;
 
-    public FoodSample1()
+    protected Vector3 initialPosition;
+
+    public FoodSample1(Vector3 position)
     {
+        this.initialPosition = position;
     }
 
     public static void addPrefab(GameObject prefab)
@@ -26,6 +29,6 @@ class FoodSample1 : AbstractElement, IElement
         }
 
         //  Unity game object
-        this.gameObject = UnityEngine.Object.Instantiate(FoodSample1.prefab, new Vector3(0, 0, 0), Quaternion.identity);
+        this.gameObject = UnityEngine.Object.Instantiate(FoodSample1.prefab, this.initialPosition, Quaternion.identity);
     }
 }

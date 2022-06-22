@@ -65,7 +65,7 @@ class SubjectSample1 : AbstractSubject, ISubject
             this.gameObject.transform.Rotate(0.0f, subjectRotation * Time.deltaTime * this.subjectRotationModifier, 0.0f, Space.Self);
             this.gameObject.transform.Translate(Vector3.forward * subjectSpeed * Time.deltaTime * this.subjectSpeedModifier, Space.Self);
 
-            float consomption = (Math.Abs(subjectSpeed) + Math.Abs(subjectRotation) / 2) * Time.deltaTime * 5;
+            float consomption = (Math.Abs(subjectSpeed) + Math.Abs(subjectRotation) / 5) * Time.deltaTime * 5;
             this.energy -= consomption;
             if (this.energy < 0)
             {

@@ -491,7 +491,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   creaturePrefab: {fileID: 5729803068095946785, guid: ad0f5872db02d2a4f8153922805d6f89, type: 3}
-  foodPrefab: {fileID: 207930423480200758, guid: 94d2e3b509e472b4aa74b82abbbdf804, type: 3}
+  foodPrefab: {fileID: 4867728754726198619, guid: 82925d5f579938c4bb19389f66955b6a, type: 3}
   creatureStepRotationY: 45
   headStepRotationY: 180
   creatureSpeed: 20
