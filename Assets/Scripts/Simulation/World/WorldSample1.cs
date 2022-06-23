@@ -3,7 +3,7 @@ using System;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class WorldSample1 : World
+public class WorldSample1 : AbstractWorld, IWorld
 {
     public WorldSample1() : base()
     {

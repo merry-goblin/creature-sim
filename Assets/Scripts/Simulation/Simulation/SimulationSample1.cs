@@ -4,11 +4,9 @@ using System.Collections.Generic;
 public class SimulationSample1 : AbstractSimulation, ISimulation
 {
 
-    public SimulationSample1(int playMode = SimulationSample1.AutoPlayMode)
+    public SimulationSample1(int playMode = SimulationSample1.AutoPlayMode) : base()
     {
         this.playMode = playMode;
-
-        this.worldList = new List<IWorld>();
     }
 
     public override void Load()
@@ -19,4 +17,6 @@ public class SimulationSample1 : AbstractSimulation, ISimulation
 
         base.Load();
     }
+
+
 }

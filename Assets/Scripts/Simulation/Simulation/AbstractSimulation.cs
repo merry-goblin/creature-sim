@@ -5,17 +5,32 @@ using UnityEngine;
 public abstract class AbstractSimulation
 {
     public List<IWorld> worldList;
+    public List<IWorld> worldListToLoad;
     public const int AutoPlayMode = 1;
     public const int ManualPlayMode = 2;
 
     protected int playMode;
 
+    public delegate void NoActiveSubjectDelegate();
+    public event NoActiveSubjectDelegate NoActiveSubject;
+
+    public AbstractSimulation()
+    {
+        this.worldList = new List<IWorld>();       // Loaded worlds
+        this.worldListToLoad = new List<IWorld>(); // Not loaded yet
+    }
+
+    /**
+     * Tip: Override this method to add one or more worlds in it then call base.Load()
+     */
     public virtual void Load()
     {
-        for (int i = 0, nb = this.worldList.Count; i < nb; i++)
+        for (int i = 0, nb = this.worldListToLoad.Count; i < nb; i++)
         {
-            this.worldList[i].Load();
+            this.worldListToLoad[i].Load();
+            this.worldList.Add(this.worldListToLoad[i]);
         }
+        this.worldListToLoad.Clear();
     }
 
     public void Update()
@@ -26,9 +41,22 @@ public abstract class AbstractSimulation
         }
     }
 
+    /**
+     * End simulation for current group of subjects
+     * To use when no more subject are active
+     * Will raise an event
+     */
+    public void EndSimulationForCurrentGroupOfSubjects()
+    {
+        if (this.NoActiveSubject != null)
+        {
+            this.NoActiveSubject(); // Event
+        }
+    }
+
     protected void AddWorld(IWorld world)
     {
-        this.worldList.Add(world);
+        this.worldListToLoad.Add(world);
     }
 
 }

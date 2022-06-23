@@ -28,14 +28,14 @@ public abstract class AbstractSubject
 
     /**
      * End simulation for current subject
-     * To use when a subject die or when the conditions for ending his simulation have been met
+     * To use when a subject dies or when the conditions for ending his simulation have been met (subject is no more active)
      * Will raise an event
      */
-    public void EndSimulation()
+    public void EndSimulationForSubject()
     {
         if (this.LifeEnds != null)
         {
-            this.LifeEnds();
+            this.LifeEnds(); // Event
         }
     }
 

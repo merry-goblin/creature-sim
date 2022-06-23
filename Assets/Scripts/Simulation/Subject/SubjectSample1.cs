@@ -70,7 +70,7 @@ class SubjectSample1 : AbstractSubject, ISubject
             if (this.energy < 0)
             {
                 this.energy = 0;
-                this.EndSimulation();
+                this.EndSimulationForSubject();
             }
         }
     }
