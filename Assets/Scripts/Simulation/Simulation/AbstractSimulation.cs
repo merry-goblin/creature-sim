@@ -11,8 +11,8 @@ public abstract class AbstractSimulation
 
     protected int playMode;
 
-    public delegate void NoActiveSubjectDelegate();
-    public event NoActiveSubjectDelegate NoActiveSubject;
+    public delegate void NoMoreActiveSubjectsDelegate();
+    public event NoMoreActiveSubjectsDelegate NoMoreActiveSubjects;
 
     public AbstractSimulation()
     {
@@ -48,9 +48,9 @@ public abstract class AbstractSimulation
      */
     public void EndSimulationForCurrentGroupOfSubjects()
     {
-        if (this.NoActiveSubject != null)
+        if (this.NoMoreActiveSubjects != null)
         {
-            this.NoActiveSubject(); // Event
+            this.NoMoreActiveSubjects(); // Event
         }
     }
 

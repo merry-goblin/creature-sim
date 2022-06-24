@@ -8,6 +8,9 @@ public abstract class AbstractWorld
     public List<ISubject> subjectListToLoad;
     public List<IElement> elementListToLoad;
 
+    public delegate void NoMoreActiveSubjectsDelegate();
+    public event NoMoreActiveSubjectsDelegate NoMoreActiveSubjects;
+
     public AbstractWorld()
     {
         this.subjectList = new List<ISubject>();
@@ -36,15 +39,6 @@ public abstract class AbstractWorld
         this.elementListToLoad.Clear();
     }
 
-    protected void AddSubject(ISubject subject)
-    {
-        this.subjectListToLoad.Add(subject);
-    }
-    protected void AddElement(IElement element)
-    {
-        this.elementListToLoad.Add(element);
-    }
-
     public virtual void Update()
     {
         for (int i = 0, nb = this.subjectList.Count; i < nb; i++)
@@ -56,5 +50,27 @@ public abstract class AbstractWorld
         {
             this.elementList[i].Update();
         }
+    }
+
+    /**
+     * End simulation for current subjects of this world
+     * To use when no more subject are active in this world
+     * Will raise an event
+     */
+    public void EndSimulationForThisWorldSubjects()
+    {
+        if (this.NoMoreActiveSubjects != null)
+        {
+            this.NoMoreActiveSubjects(); // Event
+        }
+    }
+
+    protected void AddSubject(ISubject subject)
+    {
+        this.subjectListToLoad.Add(subject);
+    }
+    protected void AddElement(IElement element)
+    {
+        this.elementListToLoad.Add(element);
     }
 }
