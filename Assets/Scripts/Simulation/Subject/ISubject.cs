@@ -9,7 +9,9 @@ public interface ISubject
 
     public List<float> GetOutput();
 
-    void Load();
+    public void Load();
 
     public void Update();
+
+    public bool IsActive();
 }

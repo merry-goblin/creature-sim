@@ -6,6 +6,9 @@ using System.Threading.Tasks;
 
 public interface ISimulation
 {
+    public delegate void NoMoreActiveWorldsDelegate();
+    public event NoMoreActiveWorldsDelegate OnNoMoreActiveWorlds;
+
     void Load();
 
     void Update();

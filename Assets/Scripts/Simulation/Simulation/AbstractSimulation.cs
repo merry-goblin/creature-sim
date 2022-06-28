@@ -11,8 +11,7 @@ public abstract class AbstractSimulation
 
     protected int playMode;
 
-    public delegate void NoMoreActiveSubjectsDelegate();
-    public event NoMoreActiveSubjectsDelegate NoMoreActiveSubjects;
+    public event ISimulation.NoMoreActiveWorldsDelegate OnNoMoreActiveWorlds;
 
     public AbstractSimulation()
     {
@@ -48,9 +47,9 @@ public abstract class AbstractSimulation
      */
     public void EndSimulationForCurrentGroupOfSubjects()
     {
-        if (this.NoMoreActiveSubjects != null)
+        if (this.OnNoMoreActiveWorlds != null)
         {
-            this.NoMoreActiveSubjects(); // Event
+            this.OnNoMoreActiveWorlds(); // Event
         }
     }
 

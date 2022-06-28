@@ -9,9 +9,20 @@ public abstract class AbstractSubject
 
     public event ISubject.LifeEndsDelegate OnLifeEnds;
 
+    protected bool active
+    {
+        get;
+        set;
+    }
+
+    public AbstractSubject()
+    {
+        this.active = false;
+    }
+
     public virtual void Load()
     {
-
+        this.active = true;
     }
 
     public virtual void Update()
@@ -32,10 +43,16 @@ public abstract class AbstractSubject
      */
     public void EndSimulationForSubject()
     {
+        this.active = false;
         if (this.OnLifeEnds != null)
         {
             this.OnLifeEnds(); // Event
         }
+    }
+
+    public bool IsActive()
+    {
+        return this.active;
     }
 
     protected void CalculateOutput()
