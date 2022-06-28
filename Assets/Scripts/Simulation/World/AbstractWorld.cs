@@ -9,7 +9,7 @@ public abstract class AbstractWorld
     public List<IElement> elementListToLoad;
 
     public delegate void NoMoreActiveSubjectsDelegate();
-    public event NoMoreActiveSubjectsDelegate NoMoreActiveSubjects;
+    public event NoMoreActiveSubjectsDelegate OnNoMoreActiveSubjects;
 
     public AbstractWorld()
     {
@@ -28,6 +28,7 @@ public abstract class AbstractWorld
         {
             this.subjectListToLoad[i].Load();
             this.subjectList.Add(this.subjectListToLoad[i]);
+            this.subjectListToLoad[i].OnLifeEnds += this.OnSubjectIsNoMoreActive; // We will be informed any time one of this world's subject dies
         }
         this.subjectListToLoad.Clear();
 
@@ -59,10 +60,15 @@ public abstract class AbstractWorld
      */
     public void EndSimulationForThisWorldSubjects()
     {
-        if (this.NoMoreActiveSubjects != null)
+        if (this.OnNoMoreActiveSubjects != null)
         {
-            this.NoMoreActiveSubjects(); // Event
+            this.OnNoMoreActiveSubjects(); // Event
         }
+    }
+
+    protected void OnSubjectIsNoMoreActive()
+    {
+        
     }
 
     protected void AddSubject(ISubject subject)

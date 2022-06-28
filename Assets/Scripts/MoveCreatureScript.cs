@@ -27,6 +27,7 @@ public class MoveCreatureScript : MonoBehaviour
     {
         AlgorithmSample1 algo = new AlgorithmSample1();
 
+
         this.InitSimulation();
 
         /*this.neuralNetwork.CalculateOutput();

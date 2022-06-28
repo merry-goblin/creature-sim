@@ -7,8 +7,7 @@ public abstract class AbstractSubject
     protected GameObject gameObject;
     protected NeuralNetwork neuralNetwork;
 
-    public delegate void LifeEndsDelegate();
-    public event LifeEndsDelegate LifeEnds;
+    public event ISubject.LifeEndsDelegate OnLifeEnds;
 
     public virtual void Load()
     {
@@ -33,9 +32,9 @@ public abstract class AbstractSubject
      */
     public void EndSimulationForSubject()
     {
-        if (this.LifeEnds != null)
+        if (this.OnLifeEnds != null)
         {
-            this.LifeEnds(); // Event
+            this.OnLifeEnds(); // Event
         }
     }
 
