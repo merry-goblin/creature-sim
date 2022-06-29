@@ -53,7 +53,7 @@ class SubjectSample1 : AbstractSubject, ISubject
 
     protected override void ApplyOutput()
     {
-        Debug.Log(this.energy);
+        //Debug.Log(this.energy);
 
         if (this.energy > 0)
         {

@@ -12,4 +12,6 @@ public interface ISimulation
     void Load();
 
     void Update();
+
+    public bool IsActive();
 }

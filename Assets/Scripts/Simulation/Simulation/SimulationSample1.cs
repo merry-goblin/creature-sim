@@ -1,5 +1,6 @@
 
 using System.Collections.Generic;
+using UnityEngine;
 
 public class SimulationSample1 : AbstractSimulation, ISimulation
 {
@@ -16,7 +17,11 @@ public class SimulationSample1 : AbstractSimulation, ISimulation
         this.AddWorld(world);
 
         base.Load();
+        base.OnNoMoreActiveWorlds += this.OnSimulationIsNoMoreActive;
     }
 
-
+    public void OnSimulationIsNoMoreActive()
+    {
+        Debug.Log("OnSimulationIsNoMoreActive");
+    }
 }
