@@ -1,11 +1,9 @@
 fileFormatVersion: 2
-guid: 18b06b794aef2dc438d6d0f14b5b1000
+guid: ef56712c4b1e4344e9d287ff58984032
 MonoImporter:
   externalObjects: {}
   serializedVersion: 2
-  defaultReferences:
-  - creaturePrefab: {instanceID: 0}
-  - foodPrefab: {instanceID: 0}
+  defaultReferences: []
   executionOrder: 0
   icon: {instanceID: 0}
   userData: 
