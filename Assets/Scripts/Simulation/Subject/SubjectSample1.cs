@@ -49,6 +49,8 @@ class SubjectSample1 : AbstractSubject, ISubject
         neuralNetwork.inputLayer[0].outputValue = 0.25f; // no real input for this subject so far
         neuralNetwork.inputLayer[1].outputValue = -0.5f; // no real input for this subject so far
         this.neuralNetwork = neuralNetwork;
+
+        base.Load();
     }
 
     protected override void ApplyOutput()

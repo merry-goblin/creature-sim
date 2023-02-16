@@ -11,6 +11,11 @@ using GeneticSharp.Domain.Populations;
 using GeneticSharp.Domain.Selections;
 using GeneticSharp.Domain.Terminations;
 
+/**
+ * In current state a creature is created with a random behavior
+ * My next goal is to create another creature when the first one dies but with the same behavior
+ * That implies to not build connexions randomly for the second creature but to set them based on the connexions of the first creature
+ */
 public class MoveCreatureScript : MonoBehaviour
 {
     public GameObject creaturePrefab;
