@@ -30,7 +30,7 @@ public class MoveCreatureScript : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        AlgorithmSample1 algo = new AlgorithmSample1();
+        //AlgorithmSample1 algo = new AlgorithmSample1();
 
 
         this.InitSimulation();

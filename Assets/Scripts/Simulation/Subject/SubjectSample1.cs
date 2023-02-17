@@ -2,6 +2,7 @@
 using System;
 using System.Collections.Generic;
 using UnityEngine;
+using FeedForwardNeuralNetwork;
 
 class SubjectSample1 : AbstractSubject, ISubject
 {
@@ -39,15 +40,17 @@ class SubjectSample1 : AbstractSubject, ISubject
         this.gameObject = UnityEngine.Object.Instantiate(SubjectSample1.prefab, new Vector3(0, 0, 0), Quaternion.identity);
 
         //  Subject neural network
+        IActivation activation = new TanhActivation();
         NeuralNetwork neuralNetwork = new NeuralNetwork(
             SubjectSample1.nbInputNeurons, 
             SubjectSample1.nbOutputNeurons, 
             SubjectSample1.nbHiddenLayers, 
             SubjectSample1.nbHiddenNeuronsByLayer, 
-            true
+            true,
+            ref activation
         );
-        neuralNetwork.inputLayer[0].outputValue = 0.25f; // no real input for this subject so far
-        neuralNetwork.inputLayer[1].outputValue = -0.5f; // no real input for this subject so far
+        neuralNetwork.inputLayer.neurons[0].outputValue = 0.25f; // no real input for this subject so far
+        neuralNetwork.inputLayer.neurons[1].outputValue = -0.5f; // no real input for this subject so far
         this.neuralNetwork = neuralNetwork;
 
         base.Load();

@@ -5,7 +5,7 @@ using UnityEngine;
 public abstract class AbstractSubject
 {
     protected GameObject gameObject;
-    protected NeuralNetwork neuralNetwork;
+    protected INeuralNetwork neuralNetwork;
 
     public event ISubject.LifeEndsDelegate OnLifeEnds;
 
