@@ -6,6 +6,8 @@ public interface IWorld
 
     void Load();
 
+    void Unload();
+
     void Update();
 
     public bool IsActive();

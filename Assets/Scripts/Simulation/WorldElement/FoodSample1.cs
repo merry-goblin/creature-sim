@@ -31,4 +31,15 @@ class FoodSample1 : AbstractElement, IElement
         //  Unity game object
         this.gameObject = UnityEngine.Object.Instantiate(FoodSample1.prefab, this.initialPosition, Quaternion.identity);
     }
+
+    public override void Unload()
+    {
+        if (this.gameObject != null)
+        {
+            UnityEngine.Object.Destroy(this.gameObject);
+        }
+
+        base.Unload();
+    }
+
 }

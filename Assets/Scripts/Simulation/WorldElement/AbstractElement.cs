@@ -11,6 +11,11 @@ public abstract class AbstractElement
 
     }
 
+    public virtual void Unload()
+    {
+        
+    }
+
     public virtual void Update()
     {
     }

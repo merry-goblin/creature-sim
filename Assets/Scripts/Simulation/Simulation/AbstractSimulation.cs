@@ -47,6 +47,15 @@ public abstract class AbstractSimulation
         }
     }
 
+    public virtual void Unload()
+    {
+        this.active = false;
+        for (int i = 0, nb = this.worldList.Count; i < nb; i++)
+        {
+            this.worldList[i].Unload();
+        }
+    }
+
     public void Update()
     {
         for (int i = 0, nb = worldList.Count; i < nb; i++)

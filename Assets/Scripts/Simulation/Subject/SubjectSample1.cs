@@ -17,7 +17,7 @@ class SubjectSample1 : AbstractSubject, ISubject
     protected float subjectRotationModifier = 45.0f;
     protected float subjectSpeedModifier = 20.0f;
 
-    protected float energy = 100.0f;
+    protected float energy = 25.0f;
 
     public SubjectSample1()
     {
@@ -54,6 +54,16 @@ class SubjectSample1 : AbstractSubject, ISubject
         this.neuralNetwork = neuralNetwork;
 
         base.Load();
+    }
+
+    public override void Unload()
+    {
+        if (this.gameObject != null)
+        {
+            UnityEngine.Object.Destroy(this.gameObject);
+        }
+
+        base.Unload();
     }
 
     protected override void ApplyOutput()

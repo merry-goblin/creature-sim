@@ -11,6 +11,8 @@ public interface ISimulation
 
     void Load();
 
+    void Unload();
+
     void Update();
 
     bool IsActive();

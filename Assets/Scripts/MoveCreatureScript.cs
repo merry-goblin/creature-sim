@@ -25,7 +25,7 @@ public class MoveCreatureScript : MonoBehaviour
     public float headStepRotationY = 180.0f;
     public float creatureSpeed = 20.0f;
 
-    private SimulationSample1 simulation;
+    private ICycleManager cycleManager;
 
     // Start is called before the first frame update
     void Start()
@@ -77,14 +77,14 @@ public class MoveCreatureScript : MonoBehaviour
         SubjectSample1.addPrefab(this.creaturePrefab);
         FoodSample1.addPrefab(this.foodPrefab);
 
-        this.simulation = new SimulationSample1(SimulationSample1.ManualPlayMode);
-        this.simulation.Load();
+        this.cycleManager = new CycleManagerSample1();
+        this.cycleManager.Start();
     }
 
     // Update is called once per frame
     void Update()
     {
-        this.simulation.Update();
+        this.cycleManager.Update();
 
         //ISubject creature = this.simulation.subjectList[0];
 

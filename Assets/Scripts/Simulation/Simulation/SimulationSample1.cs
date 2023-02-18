@@ -4,10 +4,10 @@ using UnityEngine;
 
 public class SimulationSample1 : AbstractSimulation, ISimulation
 {
-
     public SimulationSample1(int playMode = SimulationSample1.AutoPlayMode) : base()
     {
         this.playMode = playMode;
+        base.OnNoMoreActiveWorlds += this.OnSimulationIsNoMoreActive;
     }
 
     public override void Load()
@@ -17,7 +17,6 @@ public class SimulationSample1 : AbstractSimulation, ISimulation
         this.AddWorld(world);
 
         base.Load();
-        base.OnNoMoreActiveWorlds += this.OnSimulationIsNoMoreActive;
     }
 
     public void OnSimulationIsNoMoreActive()

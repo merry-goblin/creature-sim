@@ -54,6 +54,21 @@ public abstract class AbstractWorld
         }
     }
 
+    public virtual void Unload()
+    {
+        this.active = false;
+
+        for (int i = 0, nb = this.subjectList.Count; i < nb; i++)
+        {
+            this.subjectList[i].Unload();
+        }
+
+        for (int i = 0, nb = this.elementList.Count; i < nb; i++)
+        {
+            this.elementList[i].Unload();
+        }
+    }
+
     public virtual void Update()
     {
         for (int i = 0, nb = this.subjectList.Count; i < nb; i++)

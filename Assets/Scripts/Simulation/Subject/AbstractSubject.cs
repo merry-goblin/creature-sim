@@ -25,6 +25,11 @@ public abstract class AbstractSubject
         this.active = true;
     }
 
+    public virtual void Unload()
+    {
+        this.active = false;
+    }
+
     public virtual void Update()
     {
         this.CalculateOutput();
