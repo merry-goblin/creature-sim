@@ -43,13 +43,32 @@ namespace FeedForwardNeuralNetwork
             this.outputValue = this.activation.Filter(this.weightedSum);
         }
 
-        public List<float> ExportWeights()
+        public void ExportWeights(ref List<float> exportList)
         {
-            List<float> exportList = new List<float>();
-
             for (int i = 0, nb = this.axons.Count; i < nb; i++)
             {
                 exportList.Add(this.axons[i].weight);
+            }
+        }
+
+        public void ImportWeights(ref List<float> importList, ref int currentIndex)
+        {
+            for (int i = 0, nb = this.axons.Count; i < nb; i++)
+            {
+                this.axons[i].weight = importList[currentIndex];
+                currentIndex++;
+            }
+        }
+
+        public Dictionary<string, float> ExportLabelledWeights(string mainLabel)
+        {
+            Dictionary<string, float> exportList = new Dictionary<string, float>();
+            string label;
+
+            for (int i = 0, nb = this.axons.Count; i < nb; i++)
+            {
+                label = mainLabel + "l" + i;
+                exportList.Add(label, this.axons[i].weight);
             }
 
             return exportList;

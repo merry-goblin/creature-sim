@@ -1,11 +1,14 @@
 ﻿
 using System.Collections.Generic;
 
-public interface IElement
+namespace CreatureSim
 {
-    public void Load();
+    public interface IElement
+    {
+        public void Load();
 
-    public void Unload();
+        public void Unload();
 
-    public void Update();
+        public void Update();
+    }
 }

@@ -8,5 +8,9 @@ public interface INeuralNetwork
 {
     List<float> GetOutputValues();
 
-    void CalculateOutput();
+    public void CalculateOutput();
+
+    public List<float> ExportWeights();
+
+    public List<float> ImportWeights(ref List<float> importList);
 }

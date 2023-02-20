@@ -51,17 +51,44 @@ namespace FeedForwardNeuralNetwork
             }
         }
 
-        public List<List<float>> ExportWeights()
+        public void ExportWeights(ref List<float> exportList)
         {
-            List<List<float>> exportList = new List<List<float>>();
-
             //  Bias
-            exportList.Add(this.bias.ExportWeights());
+            this.bias.ExportWeights(ref exportList);
 
             //  Neurons
             for (int neuronIndex = 0, nb = this.neurons.Count; neuronIndex < nb; neuronIndex++)
             {
-                exportList.Add(this.neurons[neuronIndex].ExportWeights());
+                this.neurons[neuronIndex].ExportWeights(ref exportList);
+            }
+        }
+
+        public void ImportWeights(ref List<float> importList, ref int currentIndex)
+        {
+            //  Bias
+            this.bias.ImportWeights(ref importList, ref currentIndex);
+
+            //  Neurons
+            for (int neuronIndex = 0, nb = this.neurons.Count; neuronIndex < nb; neuronIndex++)
+            {
+                this.neurons[neuronIndex].ImportWeights(ref importList, ref currentIndex);
+            }
+        }
+
+        public Dictionary<string, Dictionary<string, float>> ExportLabelledWeights(string mainLabel)
+        {
+            Dictionary<string, Dictionary<string, float>> exportList = new Dictionary<string, Dictionary<string, float>>();
+            string label;
+
+            //  Bias
+            label = mainLabel + "b";
+            exportList.Add(label, this.bias.ExportLabelledWeights(label));
+
+            //  Neurons
+            for (int neuronIndex = 0, nb = this.neurons.Count; neuronIndex < nb; neuronIndex++)
+            {
+                label = mainLabel + "l" + neuronIndex;
+                exportList.Add(label, this.neurons[neuronIndex].ExportLabelledWeights(label));
             }
 
             return exportList;

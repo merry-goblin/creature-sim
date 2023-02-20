@@ -4,16 +4,24 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-public interface ISimulation
+namespace CreatureSim
 {
-    public delegate void NoMoreActiveWorldsDelegate();
-    public event NoMoreActiveWorldsDelegate OnNoMoreActiveWorlds;
+    public interface ISimulation
+    {
+        public List<IWorld> worldList
+        {
+            get;
+        }
 
-    void Load();
+        public delegate void NoMoreActiveWorldsDelegate();
+        public event NoMoreActiveWorldsDelegate OnNoMoreActiveWorlds;
 
-    void Unload();
+        void Load();
 
-    void Update();
+        void Unload();
 
-    bool IsActive();
+        void Update();
+
+        bool IsActive();
+    }
 }

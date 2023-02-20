@@ -2,18 +2,26 @@
 using System;
 using System.Collections.Generic;
 
-public interface ISubject
+namespace CreatureSim
 {
-    public delegate void LifeEndsDelegate();
-    public event LifeEndsDelegate OnLifeEnds;
+    public interface ISubject
+    {
+        public INeuralNetwork neuralNetwork
+        {
+            get;
+        }
 
-    public List<float> GetOutput();
+        public delegate void LifeEndsDelegate();
+        public event LifeEndsDelegate OnLifeEnds;
 
-    public void Load();
+        public List<float> GetOutput();
 
-    public void Unload();
+        public void Load();
 
-    public void Update();
+        public void Unload();
 
-    public bool IsActive();
+        public void Update();
+
+        public bool IsActive();
+    }
 }

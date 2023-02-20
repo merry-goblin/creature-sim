@@ -118,17 +118,63 @@ namespace FeedForwardNeuralNetwork
             this.hiddenLayers[lastHiddenLayerIndex].Connect(this.outputLayer, initSynaspesRandomly);
         }
 
-        public List<List<List<float>>> ExportWeights()
+        /**
+         * Export with one level array of floats
+         */
+        public List<float> ExportWeights()
         {
-            List<List<List<float>>> exportList = new List<List<List<float>>>();
+            List<float> exportList = new List<float>();
 
             //  Input
-            exportList.Add(this.inputLayer.ExportWeights());
+            this.inputLayer.ExportWeights(ref exportList);
 
             //  Hidden layers
             for (int hiddenIndex = 0, nb = this.hiddenLayers.Count; hiddenIndex < nb; hiddenIndex++)
             {
-                exportList.Add(this.hiddenLayers[hiddenIndex].ExportWeights());
+                this.hiddenLayers[hiddenIndex].ExportWeights(ref exportList);
+            }
+
+            return exportList;
+        }
+
+        /**
+         * Import with one level array of floats
+         */
+        public List<float> ImportWeights(ref List<float> importList)
+        {
+            int currentIndex = 0;
+
+            //  Input
+            this.inputLayer.ImportWeights(ref importList, ref currentIndex);
+
+            //  Hidden layers
+            for (int hiddenIndex = 0, nb = this.hiddenLayers.Count; hiddenIndex < nb; hiddenIndex++)
+            {
+                this.hiddenLayers[hiddenIndex].ImportWeights(ref importList, ref currentIndex);
+            }
+
+            return importList;
+        }
+
+        /**
+         * Export with three level array of labelled floats
+         * @todo: Since there is labels is it really needed to have multiple levels?
+         *        Initially I build this method without labels but with multiple levels in order to allow reproduction between not totally uniformed neural networks
+         */
+        public Dictionary<string, Dictionary<string, Dictionary<string, float>>> ExportLabelledWeights()
+        {
+            Dictionary<string, Dictionary<string, Dictionary<string, float>>> exportList = new Dictionary<string, Dictionary<string, Dictionary<string, float>>>();
+            string label;
+
+            //  Input
+            label = "l0";
+            exportList.Add(label, this.inputLayer.ExportLabelledWeights(label));
+
+            //  Hidden layers
+            for (int hiddenIndex = 0, nb = this.hiddenLayers.Count; hiddenIndex < nb; hiddenIndex++)
+            {
+                label = "l" + hiddenIndex + 1;
+                exportList.Add(label, this.hiddenLayers[hiddenIndex].ExportLabelledWeights(label));
             }
 
             return exportList;

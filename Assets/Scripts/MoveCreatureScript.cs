@@ -11,6 +11,8 @@ using GeneticSharp.Domain.Populations;
 using GeneticSharp.Domain.Selections;
 using GeneticSharp.Domain.Terminations;
 
+using CreatureSim;
+
 /**
  * In current state a creature is created with a random behavior
  * My next goal is to create another creature when the first one dies but with the same behavior

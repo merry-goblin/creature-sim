@@ -4,13 +4,16 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-public interface ICycleManager
+namespace CreatureSim
 {
-    public delegate void SimulationEndsDelegate();
-    public event SimulationEndsDelegate OnOneCycleEnds;
+    public interface ICycleManager
+    {
+        public delegate void SimulationEndsDelegate();
+        public event SimulationEndsDelegate OnOneCycleEnds;
 
-    void Start();
+        void Start();
 
-    void Update();
+        void Update();
 
+    }
 }

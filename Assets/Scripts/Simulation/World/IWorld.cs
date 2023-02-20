@@ -1,14 +1,23 @@
-﻿
-public interface IWorld
+﻿using System.Collections.Generic;
+
+namespace CreatureSim
 {
-    public delegate void NoMoreActiveSubjectsDelegate();
-    public event NoMoreActiveSubjectsDelegate OnNoMoreActiveSubjects;
+    public interface IWorld
+    {
+        public List<ISubject> subjectList
+        {
+            get;
+        }
 
-    void Load();
+        public delegate void NoMoreActiveSubjectsDelegate();
+        public event NoMoreActiveSubjectsDelegate OnNoMoreActiveSubjects;
 
-    void Unload();
+        void Load();
 
-    void Update();
+        void Unload();
 
-    public bool IsActive();
+        void Update();
+
+        public bool IsActive();
+    }
 }
