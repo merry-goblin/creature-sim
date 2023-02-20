@@ -1,9 +1,14 @@
 ﻿
 namespace Learning.GeneticAlgorithm
 {
-    public class Subject
+    public class Subject: ISubject
     {
         public float score = 0;
+        public FloatChromosome chromosome
+        {
+            get;
+            set;
+        }
 
         public Subject()
         {

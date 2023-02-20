@@ -140,7 +140,7 @@ namespace FeedForwardNeuralNetwork
         /**
          * Import with one level array of floats
          */
-        public List<float> ImportWeights(ref List<float> importList)
+        public List<float> ImportWeights(List<float> importList)
         {
             int currentIndex = 0;
 

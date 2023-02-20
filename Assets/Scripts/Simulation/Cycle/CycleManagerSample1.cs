@@ -1,6 +1,7 @@
 ﻿
 using System.Collections.Generic;
 using UnityEngine;
+using GA = Learning.GeneticAlgorithm;
 
 namespace CreatureSim
 {
@@ -20,28 +21,55 @@ namespace CreatureSim
 
         protected override void LoadNextCycle()
         {
-            //  Previous simulation
-            INeuralNetwork previousNeuralNetwork = this.simulation.worldList[0].subjectList[0].neuralNetwork;
-            List<float> exportedBrain = previousNeuralNetwork.ExportWeights();
-
-            //  Learning
-            List<float> brainToImport = this.ApplyGeneticAlgorithm(exportedBrain);
+            GA.GeneticAlgorithm geneticAlgorithm = this.InitializeGeneticAlgorithm();
 
             //  Next simulation
             ISimulation simulation = new SimulationSample1(SimulationSample1.ManualPlayMode);
             this.NewCycle(simulation);
             base.Load();
 
-            //  Apply learning
+            this.ApplyGeneticAlgorithm(geneticAlgorithm);
+
+            /*//  Apply learning
             INeuralNetwork nextNeuralNetwork = simulation.worldList[0].subjectList[0].neuralNetwork;
-            nextNeuralNetwork.ImportWeights(ref brainToImport);
+            nextNeuralNetwork.ImportWeights(ref brainToImport);*/
         }
 
-        protected List<float> ApplyGeneticAlgorithm(List<float> exportedBrain)
+        protected GA.GeneticAlgorithm InitializeGeneticAlgorithm()
         {
+            //  Simulation
+            ISubject simSubject = this.simulation.worldList[0].subjectList[0];
+            INeuralNetwork previousNeuralNetwork = simSubject.neuralNetwork;
 
+            //  Genetic Algorithm
+            GA.FloatChromosome gaChromosome = new GA.FloatChromosome(previousNeuralNetwork.ExportWeights());
 
-            return exportedBrain; // @todo: To change
+            GA.Subject gaSubject = new GA.Subject();
+            gaSubject.score = simSubject.Fitness();
+            gaSubject.chromosome = gaChromosome;
+
+            GA.Population gaPopulation = new GA.Population();
+            gaPopulation.AddSubject(gaSubject);
+
+            GA.RouletteWheelSelection gaSelection = new GA.RouletteWheelSelection();
+
+            GA.Crossover gaCrossover = new GA.Crossover();
+
+            GA.GeneticAlgorithm geneticAlgorithm = new GA.GeneticAlgorithm(gaPopulation, gaSelection, gaCrossover);
+
+            return geneticAlgorithm;
+        }
+
+        protected void ApplyGeneticAlgorithm(GA.GeneticAlgorithm geneticAlgorithm)
+        {
+            for (int worldIndex = 0, worldNb = this.simulation.worldList.Count; worldIndex < worldNb; worldIndex++)
+            {
+                for (int subjectIndex = 0, subjectNb = this.simulation.worldList[worldIndex].subjectList.Count; subjectIndex < subjectNb; subjectIndex++)
+                {
+                    List<float> brainToImport = geneticAlgorithm.BreedANewSubject();
+                    this.simulation.worldList[worldIndex].subjectList[subjectIndex].neuralNetwork.ImportWeights(brainToImport);
+                }
+            }
         }
 
         public void OnOneCycleIsNoMoreActive()

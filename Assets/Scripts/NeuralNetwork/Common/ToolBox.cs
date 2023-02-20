@@ -16,7 +16,7 @@ public class ToolBox
 
         return randomValue;
     }
-
+    
     private static void InitRandom()
     {
         if (random == null)

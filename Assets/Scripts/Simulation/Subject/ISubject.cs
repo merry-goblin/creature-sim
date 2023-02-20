@@ -23,5 +23,7 @@ namespace CreatureSim
         public void Update();
 
         public bool IsActive();
+
+        public float Fitness();
     }
 }

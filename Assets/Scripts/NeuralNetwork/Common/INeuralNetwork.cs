@@ -12,5 +12,5 @@ public interface INeuralNetwork
 
     public List<float> ExportWeights();
 
-    public List<float> ImportWeights(ref List<float> importList);
+    public List<float> ImportWeights(List<float> importList);
 }

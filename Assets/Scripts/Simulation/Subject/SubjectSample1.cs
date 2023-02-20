@@ -23,6 +23,8 @@ namespace CreatureSim
 
         protected float energy = 25.0f;
 
+        protected float score = 0.0f;
+
         public SubjectSample1()
         {
         }
@@ -68,6 +70,11 @@ namespace CreatureSim
             }
 
             base.Unload();
+        }
+
+        public float Fitness()
+        {
+            return this.score;
         }
 
         protected override void ApplyOutput()

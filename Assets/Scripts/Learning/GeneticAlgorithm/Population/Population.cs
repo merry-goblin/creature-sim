@@ -5,14 +5,18 @@ namespace Learning.GeneticAlgorithm
 {
     public class Population
     {
-        protected List<Subject> subjectList;
+        public List<Subject> subjectList
+        {
+            get;
+            set;
+        }
 
         public Population()
         {
             this.subjectList = new List<Subject>();
         }
 
-        public void AddSubject(ref Subject subject)
+        public void AddSubject(Subject subject)
         {
             this.subjectList.Add(subject);
         }

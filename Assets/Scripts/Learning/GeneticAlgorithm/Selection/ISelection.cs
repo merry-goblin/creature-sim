@@ -4,6 +4,6 @@ namespace Learning.GeneticAlgorithm
 {
     public interface ISelection
     {
-        public List<Subject> Select();
+        public (Subject male, Subject female) Select(Population population);
     }
 }

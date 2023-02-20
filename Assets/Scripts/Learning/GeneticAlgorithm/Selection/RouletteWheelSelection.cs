@@ -8,9 +8,14 @@ namespace Learning.GeneticAlgorithm
 {
     public class RouletteWheelSelection: ISelection
     {
-        public List<Subject> Select()
+        public RouletteWheelSelection()
         {
-            return new List<Subject>();
+
+        }
+
+        public (Subject male, Subject female) Select(Population population)
+        {
+            return (male: population.subjectList[0], female: population.subjectList[0]);
         }
     }
 }
