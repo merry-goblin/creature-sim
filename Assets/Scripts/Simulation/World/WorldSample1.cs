@@ -22,5 +22,10 @@ namespace CreatureSim
 
             base.Load();
         }
+
+        protected override bool CheckWorldEnd()
+        {
+            return true;
+        }
     }
 }

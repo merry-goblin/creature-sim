@@ -11,7 +11,16 @@ namespace CreatureSim
         public List<IWorld> worldList
         {
             get;
+            set;
         }
+        public List<IWorld> inactiveWorldList
+        {
+            get;
+            set;
+        }
+
+        public delegate void SimulationEndsDelegate();
+        public event SimulationEndsDelegate OnSimulationEnds;
 
         public delegate void NoMoreActiveWorldsDelegate();
         public event NoMoreActiveWorldsDelegate OnNoMoreActiveWorlds;

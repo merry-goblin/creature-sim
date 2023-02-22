@@ -8,6 +8,14 @@ namespace CreatureSim
         {
             get;
         }
+        public List<ISubject> inactiveSubjectList
+        {
+            get;
+            set;
+        }
+
+        public delegate void WorldEndsDelegate();
+        public event WorldEndsDelegate OnWorldEnds;
 
         public delegate void NoMoreActiveSubjectsDelegate();
         public event NoMoreActiveSubjectsDelegate OnNoMoreActiveSubjects;

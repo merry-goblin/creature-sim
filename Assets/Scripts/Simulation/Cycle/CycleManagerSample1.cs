@@ -55,7 +55,9 @@ namespace CreatureSim
 
             GA.Crossover gaCrossover = new GA.Crossover();
 
-            GA.GeneticAlgorithm geneticAlgorithm = new GA.GeneticAlgorithm(gaPopulation, gaSelection, gaCrossover);
+            GA.Mutation gaMutation = new GA.Mutation();
+
+            GA.GeneticAlgorithm geneticAlgorithm = new GA.GeneticAlgorithm(gaPopulation, gaSelection, gaCrossover, gaMutation);
 
             return geneticAlgorithm;
         }

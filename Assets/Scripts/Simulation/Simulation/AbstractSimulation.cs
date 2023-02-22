@@ -11,13 +11,25 @@ namespace CreatureSim
             get;
             set;
         }
-        public List<IWorld> worldListToLoad;
+        public List<IWorld> worldListToLoad
+        {
+            get;
+            set;
+        }
+        public List<IWorld> inactiveWorldList
+        {
+            get;
+            set;
+        }
         public const int AutoPlayMode = 1;
         public const int ManualPlayMode = 2;
 
         protected int playMode;
 
+        public event ISimulation.SimulationEndsDelegate OnSimulationEnds;
         public event ISimulation.NoMoreActiveWorldsDelegate OnNoMoreActiveWorlds;
+
+        protected abstract bool CheckSimulationEnd();
 
         protected bool active
         {
@@ -27,8 +39,9 @@ namespace CreatureSim
 
         public AbstractSimulation()
         {
-            this.worldList = new List<IWorld>();       // Loaded worlds
+            this.worldList = new List<IWorld>(); // Loaded worlds
             this.worldListToLoad = new List<IWorld>(); // Not loaded yet
+            this.inactiveWorldList = new List<IWorld>(); // Unloaded worlds are kept in memory to retrieve information on it when simulation is over
 
             this.active = false;
         }
@@ -42,7 +55,7 @@ namespace CreatureSim
             {
                 this.worldListToLoad[i].Load();
                 this.worldList.Add(this.worldListToLoad[i]);
-                this.worldListToLoad[i].OnNoMoreActiveSubjects += this.OnWorldIsNoMoreActive; // We will be informed any time one of this simulation's world dies
+                this.worldListToLoad[i].OnWorldEnds += this.OnWorldEnds; // We will be informed any time one of this simulation's world dies
             }
             this.worldListToLoad.Clear();
 
@@ -59,7 +72,9 @@ namespace CreatureSim
             for (int i = 0, nb = this.worldList.Count; i < nb; i++)
             {
                 this.worldList[i].Unload();
+                this.inactiveWorldList.Add(this.worldList[i]);
             }
+            this.worldList.Clear();
         }
 
         public void Update()
@@ -81,6 +96,14 @@ namespace CreatureSim
             {
                 this.OnNoMoreActiveWorlds(); // Event
             }
+
+            if (this.CheckSimulationEnd())
+            {
+                if (this.OnSimulationEnds != null)
+                {
+                    this.OnSimulationEnds(); // Event
+                }
+            }
         }
 
         public bool IsActive()
@@ -89,12 +112,12 @@ namespace CreatureSim
         }
 
         /**
-         * One subject of this world is no more active
-         * This method checks if there is still some subjets active
+         * One world of this simulation is no more active
+         * This method checks if there is still some worlds active
          * If not we call EndSimulationForThisWorldSubjects()
          * Could be overridden if needed by child class
          */
-        protected virtual void OnWorldIsNoMoreActive()
+        protected virtual void OnWorldEnds()
         {
             bool oneWorldIsStillActive = false;
             for (int i = 0, nb = this.worldList.Count; i < nb; i++)

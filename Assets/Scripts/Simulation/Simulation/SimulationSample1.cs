@@ -6,10 +6,12 @@ namespace CreatureSim
 {
     public class SimulationSample1 : AbstractSimulation, ISimulation
     {
+        protected int numberOfWorlToLoad = 5;
+
         public SimulationSample1(int playMode = SimulationSample1.AutoPlayMode) : base()
         {
             this.playMode = playMode;
-            base.OnNoMoreActiveWorlds += this.OnSimulationIsNoMoreActive;
+            base.OnSimulationEnds += this.OnSimulationIsFinished;
         }
 
         public override void Load()
@@ -21,9 +23,25 @@ namespace CreatureSim
             base.Load();
         }
 
-        public void OnSimulationIsNoMoreActive()
+        protected override bool CheckSimulationEnd()
         {
-            Debug.Log("OnSimulationIsNoMoreActive");
+            bool simulationEnds = true;
+            /*if (numberOfWorlToLoad > 0)
+            {
+                simulationEnds = false;
+                this.numberOfWorlToLoad--;
+
+                base.Unload();
+                this.Load();
+            }*/
+            return simulationEnds;
         }
+
+        public void OnSimulationIsFinished()
+        {
+            Debug.Log("OnSimulationIsFinished");
+        }
+
+
     }
 }

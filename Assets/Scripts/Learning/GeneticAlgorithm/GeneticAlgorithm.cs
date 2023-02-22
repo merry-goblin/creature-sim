@@ -11,12 +11,14 @@ namespace Learning.GeneticAlgorithm
         protected Population population;
         protected ISelection selection;
         protected ICrossover crossover;
+        protected IMutation mutation;
 
-        public GeneticAlgorithm(Population population, ISelection selection, ICrossover crossover)
+        public GeneticAlgorithm(Population population, ISelection selection, ICrossover crossover, IMutation mutation)
         {
             this.population = population;
             this.selection = selection;
             this.crossover = crossover;
+            this.mutation = mutation;
         }
 
         public List<float> BreedANewSubject()
@@ -27,6 +29,9 @@ namespace Learning.GeneticAlgorithm
             //  Crossover
             FloatChromosome child = new FloatChromosome();
             this.crossover.Cross(parents.male.chromosome, parents.female.chromosome, ref child);
+
+            //  Mutation
+            this.mutation.Mutate(ref child);
 
             return child.genes;
         }

@@ -10,11 +10,31 @@ namespace CreatureSim
             get;
             set;
         }
-        public List<IElement> elementList;
-        public List<ISubject> subjectListToLoad;
-        public List<IElement> elementListToLoad;
+        public List<ISubject> inactiveSubjectList
+        {
+            get;
+            set;
+        }
+        public List<IElement> elementList
+        {
+            get;
+            set;
+        }
+        public List<ISubject> subjectListToLoad
+        {
+            get;
+            set;
+        }
+        public List<IElement> elementListToLoad
+        {
+            get;
+            set;
+        }
 
-        public event IWorld.NoMoreActiveSubjectsDelegate OnNoMoreActiveSubjects;
+        public event IWorld.WorldEndsDelegate OnWorldEnds;
+        public event IWorld.NoMoreActiveSubjectsDelegate OnNoMoreActiveSubjects; // No more active subject in this world but it doesn't mean this world ends
+
+        protected abstract bool CheckWorldEnd();
 
         protected bool active
         {
@@ -28,6 +48,7 @@ namespace CreatureSim
             this.elementList = new List<IElement>();
             this.subjectListToLoad = new List<ISubject>();
             this.elementListToLoad = new List<IElement>();
+            this.inactiveSubjectList = new List<ISubject>();
 
             this.active = false;
         }
@@ -42,7 +63,7 @@ namespace CreatureSim
             {
                 this.subjectListToLoad[i].Load();
                 this.subjectList.Add(this.subjectListToLoad[i]);
-                this.subjectListToLoad[i].OnLifeEnds += this.OnSubjectIsNoMoreActive; // We will be informed any time one of this world's subject dies
+                this.subjectListToLoad[i].OnLifeEnds += this.OnOneSubjectIsNoMoreActive; // We will be informed any time one of this world's subject dies
             }
             this.subjectListToLoad.Clear();
 
@@ -67,7 +88,9 @@ namespace CreatureSim
             for (int i = 0, nb = this.subjectList.Count; i < nb; i++)
             {
                 this.subjectList[i].Unload();
+                this.inactiveSubjectList.Add(this.subjectList[i]);
             }
+            this.subjectList.Clear();
 
             for (int i = 0, nb = this.elementList.Count; i < nb; i++)
             {
@@ -89,16 +112,24 @@ namespace CreatureSim
         }
 
         /**
-         * End simulation for current subjects of this world
+         * End simulation for current world
          * To use when no more subject are active in this world
          * Will raise an event
          */
-        public void EndSimulationForThisWorldSubjects()
+        public void EndSimulationForThisWorld()
         {
             this.active = false;
             if (this.OnNoMoreActiveSubjects != null)
             {
                 this.OnNoMoreActiveSubjects(); // Event
+            }
+
+            if (this.CheckWorldEnd())
+            {
+                if (this.OnWorldEnds != null)
+                {
+                    this.OnWorldEnds(); // Event
+                }
             }
         }
 
@@ -113,7 +144,7 @@ namespace CreatureSim
          * If not we call EndSimulationForThisWorldSubjects()
          * Could be overridden if needed by child class
          */
-        protected virtual void OnSubjectIsNoMoreActive()
+        protected virtual void OnOneSubjectIsNoMoreActive()
         {
             bool oneSubjectIsStillActive = false;
             for (int i = 0, nb = this.subjectList.Count; i < nb; i++)
@@ -127,7 +158,7 @@ namespace CreatureSim
 
             if (!oneSubjectIsStillActive)
             {
-                this.EndSimulationForThisWorldSubjects();
+                this.EndSimulationForThisWorld();
             }
         }
 

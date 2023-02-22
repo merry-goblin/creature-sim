@@ -12,7 +12,7 @@ namespace CreatureSim
         public ISimulation simulation; // Current simulation
         public ISimulation simulationToLoad; // Not loaded yet
 
-        public event ICycleManager.SimulationEndsDelegate OnOneCycleEnds;
+        public event ICycleManager.OneCycleEndsDelegate OnOneCycleEnds;
 
         private bool isStarted = false;
 
@@ -54,14 +54,14 @@ namespace CreatureSim
         /**
          * First cycle expects a simulation without background,
          * so this one will be build differently
-         * It is expected to call at least NewCycle then Load in this method
+         * It is expected to call at least NewCycle method then Load method
          */
         protected abstract void LoadFirstCycle();
 
         /**
          * Other cycles expect a simulation with a background,
          * so those next simulations will be build based on what has been learned in previous simulations
-         * It is expected to call at least NewCycle then Load in this method
+         * It is expected to call at least NewCycle method then Load method
          */
         protected abstract void LoadNextCycle();
 

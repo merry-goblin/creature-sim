@@ -8,12 +8,39 @@ namespace Learning.GeneticAlgorithm
 {
     public class Crossover: ICrossover
     {
+        private Random random = null;
+        private static readonly int MaxNumberOfGenesToCopyBeforeSwitching = 10;
+
         public Crossover()
         {
 
         }
 
         public void Cross(FloatChromosome male, FloatChromosome female, ref FloatChromosome child)
+        {
+            //  Check number of genes validity and retrieve it
+            int nbGenes = this.GetNbGenes(male, female);
+
+            int crossIndex = 0;
+            bool isMale = false;
+            float childGene;
+            int nbGenesBeforeSwitch = GetRandomGeneIndexBeforeSwitch(crossIndex);
+            while (crossIndex < nbGenes)
+            {
+                if (nbGenesBeforeSwitch <= 0)
+                {
+                    nbGenesBeforeSwitch = GetRandomGeneIndexBeforeSwitch(crossIndex);
+                    isMale = !isMale;
+                }
+
+                childGene = (isMale) ? male.genes[crossIndex] : female.genes[crossIndex];
+                child.genes.Add(childGene);
+                nbGenesBeforeSwitch--;
+                crossIndex++;
+            }
+        }
+
+        private int GetNbGenes(FloatChromosome male, FloatChromosome female)
         {
             int maleNbGenes = male.genes.Count;
             int femaleNbGenes = female.genes.Count;
@@ -22,24 +49,20 @@ namespace Learning.GeneticAlgorithm
                 throw new Exception("Male & female aren't compatible. Crossover failed");
             }
 
-            Random random = new Random();
-            int crossIndex = 0;
-            int nbGenesBeforeSwitch = 0;
-            bool isMale = false;
-            while (crossIndex < maleNbGenes)
-            {
-                if (nbGenesBeforeSwitch <= 0)
-                {
-                    nbGenesBeforeSwitch = random.Next(0 + 1, 6);
-                    isMale = !isMale;
-                }
+            return maleNbGenes;
+        }
 
-                float childGene = (isMale) ? male.genes[crossIndex] : female.genes[crossIndex];
-                child.genes.Add(childGene);
-                
-                nbGenesBeforeSwitch--;
-                crossIndex++;
+        /**
+         * Number of genes to copy on one parent before switching of genes of the other parents
+         */
+        private int GetRandomGeneIndexBeforeSwitch(int currentIndex)
+        {
+            if (this.random == null)
+            {
+                this.random = new Random();
             }
+
+            return random.Next(1, MaxNumberOfGenesToCopyBeforeSwitching + 1);
         }
     }
 }

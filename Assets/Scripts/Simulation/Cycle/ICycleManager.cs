@@ -8,8 +8,8 @@ namespace CreatureSim
 {
     public interface ICycleManager
     {
-        public delegate void SimulationEndsDelegate();
-        public event SimulationEndsDelegate OnOneCycleEnds;
+        public delegate void OneCycleEndsDelegate();
+        public event OneCycleEndsDelegate OnOneCycleEnds;
 
         void Start();
 
