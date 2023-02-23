@@ -6,7 +6,7 @@ using FeedForwardNeuralNetwork;
 
 namespace CreatureSim
 {
-    class SubjectSample1 : AbstractSubject, ISubject
+    public class SubjectSample1 : AbstractSubject, ISubject
     {
         public bool initSynapsesRandomly = true;
 
@@ -25,7 +25,7 @@ namespace CreatureSim
 
         protected float score = 0.0f;
 
-        public SubjectSample1()
+        public SubjectSample1(ref BrainExchangerSample1 brainExchanger)
         {
         }
 

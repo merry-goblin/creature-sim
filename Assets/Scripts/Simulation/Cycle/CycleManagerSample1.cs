@@ -7,6 +7,8 @@ namespace CreatureSim
 {
     class CycleManagerSample1 : AbstractCycleManager, ICycleManager
     {
+        protected BrainExchangerSample1 brainExchanger;
+
         public CycleManagerSample1() : base()
         {
             base.OnOneCycleEnds += this.OnOneCycleIsNoMoreActive;
@@ -14,28 +16,36 @@ namespace CreatureSim
 
         protected override void LoadFirstCycle()
         {
-            ISimulation simulation = new SimulationSample1(SimulationSample1.ManualPlayMode);
+            this.brainExchanger = new BrainExchangerSample1(); // Won't contain any history to help building efficiant brains
+            ISimulation simulation = new SimulationSample1(ref this.brainExchanger, SimulationSample1.ManualPlayMode);
             this.NewCycle(simulation);
             base.Load();
         }
 
         protected override void LoadNextCycle()
         {
-            GA.GeneticAlgorithm geneticAlgorithm = this.InitializeGeneticAlgorithm();
+            this.brainExchanger = new BrainExchangerSample1(); // Retrieves brains of the simulation which has juste end in order to build more efficiant brains
+            ISimulation previousSimulation = this.simulation;
 
             //  Next simulation
-            ISimulation simulation = new SimulationSample1(SimulationSample1.ManualPlayMode);
+            ISimulation simulation = new SimulationSample1(ref this.brainExchanger, SimulationSample1.ManualPlayMode);
             this.NewCycle(simulation);
             base.Load();
 
-            this.ApplyGeneticAlgorithm(geneticAlgorithm);
-
-            /*//  Apply learning
-            INeuralNetwork nextNeuralNetwork = simulation.worldList[0].subjectList[0].neuralNetwork;
-            nextNeuralNetwork.ImportWeights(ref brainToImport);*/
+            this.FeedBrainExchangerWithPreviousSimulation(previousSimulation);
         }
 
-        protected GA.GeneticAlgorithm InitializeGeneticAlgorithm()
+        protected void FeedBrainExchangerWithPreviousSimulation(ISimulation previousSimulation)
+        {
+            for (int worldIndex = 0, worldNb = previousSimulation.inactiveWorldList.Count; worldIndex < worldNb; worldIndex++)
+            {
+                for (int subjectIndex = 0, subjectNb = previousSimulation.inactiveWorldList[worldIndex].inactiveSubjectList.Count; subjectIndex < subjectNb; subjectIndex++)
+                {
+                    this.brainExchanger.AddSimSubject((SubjectSample1)previousSimulation.inactiveWorldList[worldIndex].inactiveSubjectList[subjectIndex]);
+                }
+            }
+        }
+        /*protected GA.GeneticAlgorithm InitializeGeneticAlgorithm()
         {
             //  Simulation
             ISubject simSubject = this.simulation.worldList[0].subjectList[0];
@@ -60,19 +70,8 @@ namespace CreatureSim
             GA.GeneticAlgorithm geneticAlgorithm = new GA.GeneticAlgorithm(gaPopulation, gaSelection, gaCrossover, gaMutation);
 
             return geneticAlgorithm;
-        }
+        }*/
 
-        protected void ApplyGeneticAlgorithm(GA.GeneticAlgorithm geneticAlgorithm)
-        {
-            for (int worldIndex = 0, worldNb = this.simulation.worldList.Count; worldIndex < worldNb; worldIndex++)
-            {
-                for (int subjectIndex = 0, subjectNb = this.simulation.worldList[worldIndex].subjectList.Count; subjectIndex < subjectNb; subjectIndex++)
-                {
-                    List<float> brainToImport = geneticAlgorithm.BreedANewSubject();
-                    this.simulation.worldList[worldIndex].subjectList[subjectIndex].neuralNetwork.ImportWeights(brainToImport);
-                }
-            }
-        }
 
         public void OnOneCycleIsNoMoreActive()
         {

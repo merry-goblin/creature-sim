@@ -21,6 +21,11 @@ namespace Learning.GeneticAlgorithm
             this.mutation = mutation;
         }
 
+        public void AddSubject(Subject subject)
+        {
+            this.population.subjectList.Add(subject);
+        }
+
         public List<float> BreedANewSubject()
         {
             //  Selection
