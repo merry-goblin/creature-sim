@@ -25,8 +25,11 @@ namespace CreatureSim
 
         protected float score = 0.0f;
 
+        protected BrainExchangerSample1 brainExchanger;
+
         public SubjectSample1(ref BrainExchangerSample1 brainExchanger)
         {
+            this.brainExchanger = brainExchanger;
         }
 
         public static void addPrefab(GameObject prefab)

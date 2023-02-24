@@ -7,7 +7,7 @@ namespace CreatureSim
     public class SimulationSample1 : AbstractSimulation, ISimulation
     {
         protected BrainExchangerSample1 brainExchanger;
-        protected int numberOfWorlToLoad = 5;
+        protected int numberOfWorldsToLoad = 5;
 
         public SimulationSample1(ref BrainExchangerSample1 brainExchanger, int playMode = SimulationSample1.AutoPlayMode) : base()
         {
@@ -23,19 +23,20 @@ namespace CreatureSim
             this.AddWorld(world);
 
             base.Load();
+            Debug.Log("NumberOfWorldsToLoad: " + numberOfWorldsToLoad.ToString());
         }
 
         protected override bool CheckSimulationEnd()
         {
             bool simulationEnds = true;
-            /*if (numberOfWorlToLoad > 0)
+            if (numberOfWorldsToLoad > 0)
             {
                 simulationEnds = false;
-                this.numberOfWorlToLoad--;
+                this.numberOfWorldsToLoad--;
 
                 base.Unload();
                 this.Load();
-            }*/
+            }
             return simulationEnds;
         }
 

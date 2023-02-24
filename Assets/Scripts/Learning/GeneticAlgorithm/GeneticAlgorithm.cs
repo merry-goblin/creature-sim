@@ -28,6 +28,8 @@ namespace Learning.GeneticAlgorithm
 
         public List<float> BreedANewSubject()
         {
+
+
             //  Selection
             (Subject male, Subject female) parents = this.selection.Select(this.population);
 

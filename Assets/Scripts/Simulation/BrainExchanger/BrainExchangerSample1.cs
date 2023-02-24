@@ -7,6 +7,7 @@ namespace CreatureSim
     public class BrainExchangerSample1 : AbstractBrainExchanger, IBrainExchanger
     {
         protected GA.GeneticAlgorithm geneticAlgorithm;
+        protected bool isInitialized = false;
 
         public BrainExchangerSample1() : base()
         {
@@ -35,6 +36,7 @@ namespace CreatureSim
             gaSubject.score = this.CalculateFitness(simSubject);
 
             this.geneticAlgorithm.AddSubject(gaSubject);
+            this.isInitialized = true;
         }
 
         protected float CalculateFitness(SubjectSample1 simSubject)
@@ -44,8 +46,11 @@ namespace CreatureSim
 
         public void BuildSimSubjectBrain(ref SubjectSample1 simSubject)
         {
-            List<float> brainToImport = this.geneticAlgorithm.BreedANewSubject();
-            simSubject.neuralNetwork.ImportWeights(brainToImport);
+            if (this.isInitialized)
+            {
+                List<float> brainToImport = this.geneticAlgorithm.BreedANewSubject();
+                simSubject.neuralNetwork.ImportWeights(brainToImport);
+            }
         }
     }
 }

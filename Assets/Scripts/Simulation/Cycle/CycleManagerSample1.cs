@@ -30,9 +30,12 @@ namespace CreatureSim
             //  Next simulation
             ISimulation simulation = new SimulationSample1(ref this.brainExchanger, SimulationSample1.ManualPlayMode);
             this.NewCycle(simulation);
-            base.Load();
 
+            //  Take any brains of unloaded subjects and export them
             this.FeedBrainExchangerWithPreviousSimulation(previousSimulation);
+
+            //  Load a new simulation
+            base.Load();
         }
 
         protected void FeedBrainExchangerWithPreviousSimulation(ISimulation previousSimulation)

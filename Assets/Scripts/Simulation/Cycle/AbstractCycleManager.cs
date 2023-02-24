@@ -38,7 +38,7 @@ namespace CreatureSim
             {
                 this.simulation = this.simulationToLoad;
                 this.simulation.Load();
-                this.simulation.OnNoMoreActiveWorlds += this.OnSimulationIsNoMoreActive; // We will be informed when a simulation ends
+                this.simulation.OnSimulationEnds += this.OnSimulationEnds; // We will be informed when a simulation ends
                 this.simulationToLoad = null;
             }
         }
@@ -71,7 +71,7 @@ namespace CreatureSim
          * If not we call EndSimulationForThisWorldSubjects()
          * Could be overridden if needed by child class
          */
-        protected virtual void OnSimulationIsNoMoreActive()
+        protected virtual void OnSimulationEnds()
         {
             if (this.OnOneCycleEnds != null)
             {
