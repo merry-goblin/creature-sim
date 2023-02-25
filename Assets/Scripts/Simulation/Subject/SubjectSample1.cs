@@ -21,7 +21,7 @@ namespace CreatureSim
         protected float subjectRotationModifier = 45.0f;
         protected float subjectSpeedModifier = 20.0f;
 
-        protected float energy = 5.0f;
+        protected float energy = 15.0f;
 
         protected float score = 0.0f;
 
@@ -94,6 +94,8 @@ namespace CreatureSim
 
                 this.gameObject.transform.Rotate(0.0f, subjectRotation * Time.deltaTime * this.subjectRotationModifier, 0.0f, Space.Self);
                 this.gameObject.transform.Translate(Vector3.forward * subjectSpeed * Time.deltaTime * this.subjectSpeedModifier, Space.Self);
+
+                this.gameObject.AddComponent<CollisionExampleScript>();
 
                 float consomption = (Math.Abs(subjectSpeed) + Math.Abs(subjectRotation) / 5) * Time.deltaTime * 5;
                 this.energy -= consomption;

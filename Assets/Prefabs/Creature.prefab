@@ -60,7 +60,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 5729803066834629805}
   m_LocalRotation: {x: 1.110223e-17, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -1.99, y: 0, z: -1.4}
+  m_LocalPosition: {x: -1.68, y: 0, z: -1.4}
   m_LocalScale: {x: 1, y: 0.76613, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -694,7 +694,7 @@ MeshCollider:
   m_GameObject: {fileID: 5729803066834629805}
   m_Material: {fileID: 0}
   m_IsTrigger: 0
-  m_Enabled: 1
+  m_Enabled: 0
   serializedVersion: 4
   m_Convex: 0
   m_CookingOptions: 30
@@ -12365,7 +12365,7 @@ MeshCollider:
   m_GameObject: {fileID: 5729803067026417170}
   m_Material: {fileID: 0}
   m_IsTrigger: 0
-  m_Enabled: 1
+  m_Enabled: 0
   serializedVersion: 4
   m_Convex: 0
   m_CookingOptions: 30
@@ -24036,7 +24036,7 @@ MeshCollider:
   m_GameObject: {fileID: 5729803067307752025}
   m_Material: {fileID: 0}
   m_IsTrigger: 0
-  m_Enabled: 1
+  m_Enabled: 0
   serializedVersion: 4
   m_Convex: 0
   m_CookingOptions: 30
@@ -24050,6 +24050,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 5729803068095946786}
+  - component: {fileID: 7964271901436835225}
   m_Layer: 0
   m_Name: Creature
   m_TagString: Untagged
@@ -24073,6 +24074,19 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!135 &7964271901436835225
+SphereCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5729803068095946785}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Radius: 2
+  m_Center: {x: 0, y: 0, z: 0.4}
 --- !u!1 &5729803068343282055
 GameObject:
   m_ObjectHideFlags: 0
@@ -58157,7 +58171,7 @@ MeshCollider:
   m_GameObject: {fileID: 5729803068343282055}
   m_Material: {fileID: 0}
   m_IsTrigger: 0
-  m_Enabled: 1
+  m_Enabled: 0
   serializedVersion: 4
   m_Convex: 0
   m_CookingOptions: 30
