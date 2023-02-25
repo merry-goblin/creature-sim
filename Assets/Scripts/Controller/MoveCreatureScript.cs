@@ -87,9 +87,4 @@ public class MoveCreatureScript : MonoBehaviour
         this.creatureGameObject.transform.Translate(Vector3.forward * Time.deltaTime * this.creatureSpeedDirection * this.creatureSpeed, Space.Self);
         //this.head.transform.RotateAround(headRotationCenter, Vector3.up, this.headStepRotationY * this.headRotationModifier * Time.deltaTime);*/
     }
-
-    public void DebugCollision()
-    {
-        Debug.Log("Collision");
-    }
 }

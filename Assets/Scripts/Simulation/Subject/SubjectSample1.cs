@@ -21,7 +21,7 @@ namespace CreatureSim
         protected float subjectRotationModifier = 45.0f;
         protected float subjectSpeedModifier = 20.0f;
 
-        protected float energy = 15.0f;
+        protected float energy = 10.0f;
 
         protected float score = 0.0f;
 
@@ -75,6 +75,39 @@ namespace CreatureSim
             base.Unload();
         }
 
+        public override void Update()
+        {
+            if (this.gameObject != null)
+            {
+                this.CheckCollisionWithFood();
+            }
+
+            base.Update();
+        }
+
+        protected void CheckCollisionWithFood()
+        {
+            SubjectSample1Script subjectController = this.gameObject.GetComponent<SubjectSample1Script>();
+            if (subjectController != null)
+            {
+                if (subjectController.foodEnteredInCollision != null)
+                {
+                    //  Fitness in genetic algorithms
+                    this.score += 10.0f;
+
+                    //  Destroy food (indirectly)
+                    FoodSample1Script foodController = subjectController.foodEnteredInCollision.GetComponent<FoodSample1Script>();
+                    if (foodController != null)
+                    {
+                        foodController.hasBeenEaten = true;
+                    }
+
+                    //  Remove collision information of current subject's game object
+                    subjectController.foodEnteredInCollision = null;
+                }
+            }
+        }
+
         public float Fitness()
         {
             return this.score;
@@ -95,9 +128,9 @@ namespace CreatureSim
                 this.gameObject.transform.Rotate(0.0f, subjectRotation * Time.deltaTime * this.subjectRotationModifier, 0.0f, Space.Self);
                 this.gameObject.transform.Translate(Vector3.forward * subjectSpeed * Time.deltaTime * this.subjectSpeedModifier, Space.Self);
 
-                this.gameObject.AddComponent<CollisionExampleScript>();
+                this.gameObject.AddComponent<SubjectSample1Script>();
 
-                float consomption = (Math.Abs(subjectSpeed) + Math.Abs(subjectRotation) / 5) * Time.deltaTime * 5;
+                float consomption = (Math.Abs(subjectSpeed) + Math.Abs(subjectRotation) / 5.0f + 1.0f) * Time.deltaTime * 5.0f;
                 this.energy -= consomption;
                 if (this.energy <= 0)
                 {

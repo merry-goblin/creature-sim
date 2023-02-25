@@ -45,10 +45,11 @@ namespace CreatureSim
         public AbstractWorld()
         {
             this.subjectList = new List<ISubject>();
-            this.elementList = new List<IElement>();
             this.subjectListToLoad = new List<ISubject>();
-            this.elementListToLoad = new List<IElement>();
             this.inactiveSubjectList = new List<ISubject>();
+
+            this.elementListToLoad = new List<IElement>();
+            this.elementList = new List<IElement>();
 
             this.active = false;
         }
@@ -108,6 +109,13 @@ namespace CreatureSim
             for (int i = 0, nb = this.elementList.Count; i < nb; i++)
             {
                 this.elementList[i].Update();
+                if (this.elementList[i].toUnload)
+                {
+                    this.elementList[i].Unload();
+                    this.elementList.RemoveAt(i);
+                    i--;
+                    nb--;
+                }
             }
         }
 

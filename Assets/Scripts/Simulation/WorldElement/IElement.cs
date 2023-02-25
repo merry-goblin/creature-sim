@@ -5,6 +5,12 @@ namespace CreatureSim
 {
     public interface IElement
     {
+        public bool toUnload
+        {
+            get;
+            set;
+        }
+
         public void Load();
 
         public void Unload();

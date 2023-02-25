@@ -12,7 +12,9 @@ namespace CreatureSim
 
         protected Vector3 initialPosition;
 
-        public FoodSample1(Vector3 position)
+        protected FoodSample1Script gameObjectController;
+
+        public FoodSample1(Vector3 position):base()
         {
             this.initialPosition = position;
         }
@@ -32,6 +34,8 @@ namespace CreatureSim
 
             //  Unity game object
             this.gameObject = UnityEngine.Object.Instantiate(FoodSample1.prefab, this.initialPosition, Quaternion.identity);
+            this.gameObject.name = "Food_" + FoodSample1.PeekNewId();
+            this.gameObjectController = this.gameObject.GetComponent<FoodSample1Script>();
         }
 
         public override void Unload()
@@ -42,6 +46,22 @@ namespace CreatureSim
             }
 
             base.Unload();
+        }
+
+        public override void Update()
+        {
+            if (this.gameObject != null)
+            {
+                if (this.gameObjectController != null)
+                {
+                    if (this.gameObjectController.hasBeenEaten)
+                    {
+                        this.toUnload = true;
+                    }
+                }
+            }
+
+            base.Update();
         }
 
     }
