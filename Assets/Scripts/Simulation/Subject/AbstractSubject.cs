@@ -38,6 +38,7 @@ namespace CreatureSim
 
         public virtual void Update()
         {
+            this.ApplyInput();
             this.CalculateOutput();
             this.ApplyOutput();
         }
@@ -70,6 +71,8 @@ namespace CreatureSim
         {
             this.neuralNetwork.CalculateOutput();
         }
+
+        protected abstract void ApplyInput();
 
         /// <summary>
         /// Child class will decide what to do with the output.

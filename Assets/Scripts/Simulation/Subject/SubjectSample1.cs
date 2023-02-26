@@ -115,6 +115,26 @@ namespace CreatureSim
             return this.score;
         }
 
+        protected override void ApplyInput()
+        {
+            if (this.gameObject != null)
+            {
+                Vector3 forward = this.gameObject.transform.TransformDirection(Vector3.forward);
+                Vector3 position = new Vector3(this.gameObject.transform.position.x, this.gameObject.transform.position.y + 0.5f, this.gameObject.transform.position.z);
+                Ray ray = new Ray(position, forward);
+                if (Physics.Raycast(ray))
+                {
+                    Debug.Log("An object go through this raycasting");
+                    Debug.DrawRay(position, forward * 75.0f, Color.red);
+                }
+                else
+                {
+                    Debug.Log("No object go through this raycasting");
+                    Debug.DrawRay(position, forward * 75.0f, Color.green);
+                }
+            }
+        }
+
         protected override void ApplyOutput()
         {
             //Debug.Log(this.energy);

@@ -17,3 +17,9 @@ The main purpose of this simulation is to see effecient behaviors to emerge on t
 ### Description
 
 Wait for it
+
+![print](print.jpg)
+
+--------------------------
+
+author : [alexandre keller](https://github.com/merry-goblin)

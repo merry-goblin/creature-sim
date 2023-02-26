@@ -14,6 +14,7 @@ GameObject:
   - component: {fileID: 189181240587929890}
   - component: {fileID: 4715007251534291653}
   - component: {fileID: -510001035454059980}
+  - component: {fileID: 597177850351808167}
   m_Layer: 0
   m_Name: Food
   m_TagString: Untagged
@@ -128,3 +129,18 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7480d9292ab4e4b498d2a97ac9363d85, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  hasBeenEaten: 0
+--- !u!136 &597177850351808167
+CapsuleCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4867728754726198619}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  m_Radius: 0.6
+  m_Height: 2
+  m_Direction: 1
+  m_Center: {x: 0, y: 0, z: 0}
