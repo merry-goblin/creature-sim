@@ -15,7 +15,8 @@ public class SubjectSample1Script : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-
+        Vector3 forward = this.transform.TransformDirection(Vector3.forward) * 50.0f;
+        Debug.DrawRay(this.transform.position, forward, Color.green);
     }
 
     public void OnCollisionEnter(UnityEngine.Collision collision)
