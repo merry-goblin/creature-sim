@@ -8,6 +8,8 @@ namespace CreatureSim
 {
     public class SubjectSample1 : AbstractSubject, ISubject
     {
+        public bool oneUseDebugOnly = true;
+
         public bool initSynapsesRandomly = true;
 
         protected static GameObject prefab;
@@ -123,7 +125,7 @@ namespace CreatureSim
 
                 float subjectRotation = outputList[0];
                 float subjectSpeed = outputList[1];
-                //Debug.Log(outputList[0].ToString());
+                subjectSpeed = this.ForceMinimumSpeed(subjectSpeed);
 
                 this.gameObject.transform.Rotate(0.0f, subjectRotation * Time.deltaTime * this.subjectRotationModifier, 0.0f, Space.Self);
                 this.gameObject.transform.Translate(Vector3.forward * subjectSpeed * Time.deltaTime * this.subjectSpeedModifier, Space.Self);
@@ -138,6 +140,29 @@ namespace CreatureSim
                     base.EndSimulationForSubject();
                 }
             }
+        }
+
+        /**
+         * Unity physics doesn't collide if subject is too slow
+         */
+        protected float ForceMinimumSpeed(float speed)
+        {
+            if (speed > 0)
+            {
+                if (speed < 0.3f)
+                {
+                    speed = 0.3f;
+                }
+            }
+            else
+            {
+                if (speed > -0.3f)
+                {
+                    speed = -0.3f;
+                }
+            }
+
+            return speed;
         }
     }
 }
