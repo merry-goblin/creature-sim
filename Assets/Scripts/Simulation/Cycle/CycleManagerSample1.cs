@@ -78,7 +78,7 @@ namespace CreatureSim
 
         public void OnOneCycleIsNoMoreActive()
         {
-            Debug.Log("OnOneCycleIsNoMoreActive");
+            //Debug.Log("OnOneCycleIsNoMoreActive");
             this.LoadNextCycle();
 
             // @todo: finish Load method the call Load here

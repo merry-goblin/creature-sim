@@ -23,7 +23,7 @@ namespace CreatureSim
             this.AddWorld(world);
 
             base.Load();
-            Debug.Log("NumberOfWorldsToLoad: " + numberOfWorldsToLoad.ToString());
+            //Debug.Log("NumberOfWorldsToLoad: " + numberOfWorldsToLoad.ToString());
         }
 
         protected override bool CheckSimulationEnd()
@@ -42,7 +42,7 @@ namespace CreatureSim
 
         public void OnSimulationIsFinished()
         {
-            Debug.Log("OnSimulationIsFinished");
+            //Debug.Log("OnSimulationIsFinished");
         }
 
 

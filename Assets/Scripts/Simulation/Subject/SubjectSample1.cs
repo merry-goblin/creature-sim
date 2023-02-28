@@ -25,7 +25,7 @@ namespace CreatureSim
 
         protected float energy = 10.0f;
 
-        protected float score = 0.0f;
+        public float score = 0.0f;
 
         protected BrainExchangerSample1 brainExchanger;
 
@@ -124,12 +124,12 @@ namespace CreatureSim
                 Ray ray = new Ray(position, forward);
                 if (Physics.Raycast(ray))
                 {
-                    Debug.Log("An object go through this raycasting");
+                    //Debug.Log("An object go through this raycasting");
                     Debug.DrawRay(position, forward * 75.0f, Color.red);
                 }
                 else
                 {
-                    Debug.Log("No object go through this raycasting");
+                    //Debug.Log("No object go through this raycasting");
                     Debug.DrawRay(position, forward * 75.0f, Color.green);
                 }
             }

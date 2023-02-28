@@ -9,7 +9,7 @@ namespace Learning.GeneticAlgorithm
     public class Crossover: ICrossover
     {
         private Random random = null;
-        private static readonly int MaxNumberOfGenesToCopyBeforeSwitching = 10;
+        private static readonly int MaxNumberOfGenesToCopyBeforeSwitching = 50;
 
         public Crossover()
         {

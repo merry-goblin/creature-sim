@@ -41,7 +41,7 @@ namespace CreatureSim
 
         protected float CalculateFitness(SubjectSample1 simSubject)
         {
-            return 1.0f;
+            return simSubject.score + 1.0f;
         }
 
         public void BuildSimSubjectBrain(ref SubjectSample1 simSubject)
