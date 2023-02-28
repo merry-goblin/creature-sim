@@ -15,15 +15,15 @@ namespace CreatureSim
         protected static GameObject prefab;
         protected static bool prefabIsLoaded = false;
 
-        protected static int nbInputNeurons = 2;
+        protected static int nbInputNeurons = 1;
         protected static int nbOutputNeurons = 2;
-        protected static int nbHiddenLayers = 4; // must be > 0
-        protected static int nbHiddenNeuronsByLayer = 5;
+        protected static int nbHiddenLayers = 5; // must be > 0
+        protected static int nbHiddenNeuronsByLayer = 12;
 
         protected float subjectRotationModifier = 45.0f;
         protected float subjectSpeedModifier = 20.0f;
 
-        protected float energy = 10.0f;
+        protected float energy = 75.0f;
 
         public float score = 0.0f;
 
@@ -49,6 +49,7 @@ namespace CreatureSim
 
             //  Unity game object
             this.gameObject = UnityEngine.Object.Instantiate(SubjectSample1.prefab, new Vector3(0, 0, 0), Quaternion.identity);
+            this.gameObject.AddComponent<SubjectSample1Script>();
 
             //  Subject neural network
             IActivation activation = new TanhActivation();
@@ -60,8 +61,6 @@ namespace CreatureSim
                 this.initSynapsesRandomly,
                 ref activation
             );
-            neuralNetwork.inputLayer.neurons[0].outputValue = 0.25f; // no real input for this subject so far
-            neuralNetwork.inputLayer.neurons[1].outputValue = -0.5f; // no real input for this subject so far
             this.neuralNetwork = neuralNetwork;
 
             base.Load();
@@ -121,17 +120,21 @@ namespace CreatureSim
             {
                 Vector3 forward = this.gameObject.transform.TransformDirection(Vector3.forward);
                 Vector3 position = new Vector3(this.gameObject.transform.position.x, this.gameObject.transform.position.y + 0.5f, this.gameObject.transform.position.z);
-                Ray ray = new Ray(position, forward);
-                if (Physics.Raycast(ray))
+                Ray ray = new Ray(position, forward) ;
+                float input1 = -1.0f;
+                if (Physics.Raycast(ray, 50.0f))
                 {
-                    //Debug.Log("An object go through this raycasting");
-                    Debug.DrawRay(position, forward * 75.0f, Color.red);
+                    input1 = 1.0f;
+                    Debug.DrawRay(position, forward * 50.0f, Color.red);
                 }
                 else
                 {
-                    //Debug.Log("No object go through this raycasting");
-                    Debug.DrawRay(position, forward * 75.0f, Color.green);
+                    Debug.DrawRay(position, forward * 50.0f, Color.green);
                 }
+                List<float> values = new List<float>();
+                values.Add(input1);
+                
+                this.neuralNetwork.ApplyInputValues(values);
             }
         }
 
@@ -149,8 +152,6 @@ namespace CreatureSim
 
                 this.gameObject.transform.Rotate(0.0f, subjectRotation * Time.deltaTime * this.subjectRotationModifier, 0.0f, Space.Self);
                 this.gameObject.transform.Translate(Vector3.forward * subjectSpeed * Time.deltaTime * this.subjectSpeedModifier, Space.Self);
-
-                this.gameObject.AddComponent<SubjectSample1Script>();
 
                 float consomption = (Math.Abs(subjectSpeed) + Math.Abs(subjectRotation) / 5.0f + 1.0f) * Time.deltaTime * 5.0f;
                 this.energy -= consomption;

@@ -48,6 +48,19 @@ namespace FeedForwardNeuralNetwork
             this.InitSynapses(initSynaspesRandomly);
         }
 
+        public void ApplyInputValues(List<float> values)
+        {
+            int nbValues = values.Count;
+            for (int i = 0, nb = this.inputLayer.neurons.Count; i < nb; i++)
+            {
+                if (i >= nbValues)
+                {
+                    break;
+                }
+                this.inputLayer.neurons[i].outputValue = values[i];
+            }
+        }
+
         /**
          * Cross this neural network from inputs to outputs by doing Weighted sums and filtered the result with an activation function.
          * When calling this method inputs have to be setted

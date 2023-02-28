@@ -7,7 +7,7 @@ namespace CreatureSim
     public class SimulationSample1 : AbstractSimulation, ISimulation
     {
         protected BrainExchangerSample1 brainExchanger;
-        protected int numberOfWorldsToLoad = 5;
+        protected int numberOfWorldsToLoad = 50;
 
         public SimulationSample1(ref BrainExchangerSample1 brainExchanger, int playMode = SimulationSample1.AutoPlayMode) : base()
         {

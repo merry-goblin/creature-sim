@@ -19,13 +19,22 @@ namespace CreatureSim
             SubjectSample1 subject = new SubjectSample1(ref this.brainExchanger);
             this.AddSubject(subject);
 
-            Vector3 initialPosition = new Vector3(1.0f, 1.1f, 5.0f);
-            FoodSample1 food = new FoodSample1(initialPosition);
-            this.AddElement(food);
+            this.LoadFoodElements(100);
 
             base.Load();
 
             this.brainExchanger.BuildSimSubjectBrain(ref subject);
+        }
+
+        protected void LoadFoodElements(int nbFoodElements)
+        {
+            for (int i = 0; i < nbFoodElements; i++)
+            {
+                float x = ToolBox.GetRandomFloat(-100.0f, 100.0f);
+                float z = ToolBox.GetRandomFloat(-100.0f, 100.0f);
+                FoodSample1 food = new FoodSample1(new Vector3(x, 1.1f, z));
+                this.AddElement(food);
+            }
         }
 
         protected override bool CheckWorldEnd()

@@ -9,7 +9,7 @@ public class SubjectSample1Script : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        
+
     }
 
     // Update is called once per frame
@@ -33,7 +33,7 @@ public class SubjectSample1Script : MonoBehaviour
 
     public void OnCollisionEnter(UnityEngine.Collision collision)
     {
-        if (foodEnteredInCollision == null)
+        if (this.foodEnteredInCollision == null)
         {
             this.foodEnteredInCollision = collision.gameObject;
         }

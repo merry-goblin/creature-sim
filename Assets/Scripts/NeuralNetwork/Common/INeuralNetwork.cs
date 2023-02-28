@@ -6,7 +6,9 @@ using System.Threading.Tasks;
 
 public interface INeuralNetwork
 {
-    List<float> GetOutputValues();
+    public void ApplyInputValues(List<float> values);
+
+    public List<float> GetOutputValues();
 
     public void CalculateOutput();
 

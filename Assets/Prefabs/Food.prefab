@@ -14,7 +14,6 @@ GameObject:
   - component: {fileID: 189181240587929890}
   - component: {fileID: 4715007251534291653}
   - component: {fileID: -510001035454059980}
-  - component: {fileID: 597177850351808167}
   m_Layer: 0
   m_Name: Food
   m_TagString: Untagged
@@ -97,7 +96,7 @@ CapsuleCollider:
   m_Material: {fileID: 13400000, guid: ae40b1fedf363dd4386d5d7b5d788782, type: 2}
   m_IsTrigger: 0
   m_Enabled: 1
-  m_Radius: 0.5
+  m_Radius: 0.6
   m_Height: 2
   m_Direction: 1
   m_Center: {x: 0, y: 0, z: 0}
@@ -130,17 +129,3 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   hasBeenEaten: 0
---- !u!136 &597177850351808167
-CapsuleCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 4867728754726198619}
-  m_Material: {fileID: 0}
-  m_IsTrigger: 0
-  m_Enabled: 1
-  m_Radius: 0.6
-  m_Height: 2
-  m_Direction: 1
-  m_Center: {x: 0, y: 0, z: 0}
