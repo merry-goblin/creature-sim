@@ -23,7 +23,7 @@ namespace CreatureSim
         protected float subjectRotationModifier = 45.0f;
         protected float subjectSpeedModifier = 20.0f;
 
-        protected float energy = 75.0f;
+        protected float energy = 200.0f;
 
         public float score = 0.0f;
 

@@ -30,8 +30,8 @@ namespace CreatureSim
         {
             for (int i = 0; i < nbFoodElements; i++)
             {
-                float x = ToolBox.GetRandomFloat(-100.0f, 100.0f);
-                float z = ToolBox.GetRandomFloat(-100.0f, 100.0f);
+                float x = ToolBox.GetRandomFloat(-250.0f, 250.0f);
+                float z = ToolBox.GetRandomFloat(-250.0f, 250.0f);
                 FoodSample1 food = new FoodSample1(new Vector3(x, 1.1f, z));
                 this.AddElement(food);
             }

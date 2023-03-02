@@ -66,7 +66,7 @@ public class MoveCreatureScript : MonoBehaviour
     {
         //SceneManager.LoadScene("SceneToLoad", LoadSceneMode.Single);
 
-        Time.timeScale = 5.0f;
+        Time.timeScale = 10.0f;
 
         SubjectSample1.addPrefab(this.creaturePrefab);
         FoodSample1.addPrefab(this.foodPrefab);
