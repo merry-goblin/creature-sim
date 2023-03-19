@@ -24,4 +24,15 @@ public class ToolBox
             ToolBox.random = new Random();
         }
     }
+
+    public static float Sigmoid(float value)
+    {
+        return 1.0f / (1.0f + (float)Math.Exp((float)-value));
+    }
+
+    public static float SigmoidDerivative(float value)
+    {
+        float sigmoid = ToolBox.Sigmoid(value);
+        return sigmoid * (1 - sigmoid);
+    }
 }

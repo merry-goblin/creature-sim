@@ -7,10 +7,12 @@ namespace Learning.GradientDescent
     public class GradientDescentAlgorithm
     {
         protected NeuralNetwork neuralNetwork;
+        protected float learningRate;
 
-        public GradientDescentAlgorithm(NeuralNetwork neuralNetwork)
+        public GradientDescentAlgorithm(NeuralNetwork neuralNetwork, float learningRate)
         {
             this.neuralNetwork = neuralNetwork;
+            this.learningRate = learningRate;
         }
 
         public void Train(List<List<float>> inputValueSet, List<List<float>> expectedOutputValueSet)
@@ -34,7 +36,48 @@ namespace Learning.GradientDescent
 
         protected void Backpropagation(List<float> expectedOutputValues)
         {
-            //  @todo
+            //  Loop on each ouput neurons
+            Neuron outputNeuron;
+            for (int outputNeuronIndex = 0, nbOutputNeurons = this.neuralNetwork.outputLayer.neurons.Count; outputNeuronIndex < nbOutputNeurons; outputNeuronIndex++)
+            {
+                outputNeuron = this.neuralNetwork.outputLayer.neurons[outputNeuronIndex];
+
+                float error = this.CalculateError(outputNeuron, expectedOutputValues[outputNeuronIndex]);
+                this.Descend(outputNeuron, error);
+            }
         }
+
+        protected float CalculateError(Neuron neuron, float expectedValue)
+        {
+            float activationDerivative = neuron.activation.UnfilterDerivative(neuron.weightedSum);
+            float difference = expectedValue - neuron.outputValue;
+
+            return activationDerivative * neuron.weightedSum * difference;
+        }
+
+        protected void Descend(Neuron neuron, float error)
+        {
+            Synapse synapse;
+            Neuron neuronOfPreviousLayer;
+            for (int synapseIndex = 0, nbSynapses = neuron.dendrites.Count; synapseIndex < nbSynapses; synapseIndex++)
+            {
+                synapse = neuron.dendrites[synapseIndex];
+                this.UpdateNeuronWeightWithError(synapse, error); // Update synapse weight
+
+                neuronOfPreviousLayer = synapse.axon;
+                float deepError = this.CalculateDeepError(neuron, error);
+            }
+        }
+
+        protected void UpdateNeuronWeightWithError(Synapse synapse, float error)
+        {
+            synapse.weight -= this.learningRate * error * synapse.axon.outputValue;
+        }
+
+        protected float CalculateDeepError(Neuron neuron, float error)
+        {
+            return 0.0f;
+        }
+
     }
 }
