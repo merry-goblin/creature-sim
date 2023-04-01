@@ -6,9 +6,15 @@ EditorBuildSettings:
   serializedVersion: 2
   m_Scenes:
   - enabled: 1
-    path: Assets/Scenes/SampleScene.unity
+    path: Assets/Scenes/Menu/MenuScene.unity
+    guid: dfe3147b5d8b4954a91f9cf64bde35b6
+  - enabled: 1
+    path: Assets/Scenes/Learning/GeneticAlgorithms/SampleScene1.unity
     guid: 9fc0d4010bbf28b4594072e72b8655ab
   - enabled: 1
-    path: Assets/Scenes/SceneToLoad.unity
-    guid: 6c0e5e1756ce37646ba2c8174ed5f077
+    path: Assets/Scenes/Menu/DebugMenuScene.unity
+    guid: a80e6973399be3b4d998a3857e721cb4
+  - enabled: 1
+    path: Assets/Scenes/Learning/Retropropagation/LearnXORByRetropropagationScene.unity
+    guid: 0cdf18b64f5b8784f97c5e02fed4c98f
   m_configObjects: {}

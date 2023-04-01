@@ -7,6 +7,10 @@ public class MainMenuScript : MonoBehaviour
 {
     public void Play()
     {
-        SceneManager.LoadScene("SampleScene");
+        SceneManager.LoadScene("SampleScene1");
+    }
+    public void Debug()
+    {
+        SceneManager.LoadScene("DebugMenuScene");
     }
 }
