@@ -8,6 +8,7 @@ namespace FeedForwardNeuralNetwork
     {
         public float weightedSum = float.NaN;
         public float outputValue;
+        public float error;
         public List<Synapse> dendrites; // input
         public List<Synapse> axons; // output
         public IActivation activation;
