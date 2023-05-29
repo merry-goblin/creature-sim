@@ -36,8 +36,10 @@ namespace Learning.GradientDescent
 
         protected void Backpropagation(List<float> expectedOutputValues)
         {
-            this.CalculateNeuralNetworkErrors(expectedOutputValues);
-            this.CorrectNeuralNetworkWeights();
+            this.CalculateGradients();
+            this.ModifyWeights();
+            //this.CalculateNeuralNetworkErrors(expectedOutputValues);
+            //this.CorrectNeuralNetworkWeights();
 
             /*//  Loop on each ouput neurons
             Neuron outputNeuron;
@@ -49,6 +51,98 @@ namespace Learning.GradientDescent
                 this.Descend(outputNeuron);
             }*/
         }
+
+        protected void CalculateGradients()
+        {
+            this.CalculateOutputGradients();
+            this.CalculateHiddenLayersGradients();
+        }
+
+        protected void CalculateOutputGradients()
+        {
+            for (int outputIndex = 0, nbNeurons = this.neuralNetwork.outputLayer.neurons.Count; outputIndex < nbNeurons; outputIndex++)
+            {
+                this.CalculateOutputGradient(this.neuralNetwork.outputLayer.neurons[outputIndex]);
+            }
+        }
+
+        protected void CalculateOutputGradient(Neuron neuron)
+        {
+            neuron.gradient = neuron.error * neuron.activation.UnfilterDerivative(neuron.weightedSum);
+        }
+
+        protected void CalculateHiddenLayersGradients()
+        {
+            for (int layerIndex = this.neuralNetwork.hiddenLayers.Count - 1; layerIndex >= 0; layerIndex--)
+            {
+                this.CalculateHiddenGradients(this.neuralNetwork.hiddenLayers[layerIndex]);
+            }
+        }
+
+        protected void CalculateHiddenGradients(Layer layer)
+        {
+            for (int outputIndex = 0, nbNeurons = layer.neurons.Count; outputIndex < nbNeurons; outputIndex++)
+            {
+                this.CalculateHiddenGradient(layer.neurons[outputIndex]);
+            }
+        }
+
+        protected void CalculateHiddenGradient(Neuron neuron)
+        {
+            //  Only connections between our current neuron and neurons of the next layer are taken in account here
+            float weightsByGradients = 0.0f;
+            for (int nextNeuronIndex = 0, nbNeurons = neuron.axons.Count; nextNeuronIndex < nbNeurons; nextNeuronIndex++)
+            {
+                weightsByGradients += neuron.axons[nextNeuronIndex].weight * neuron.axons[nextNeuronIndex].dendrite.gradient;
+            }
+            neuron.gradient = weightsByGradients * neuron.activation.UnfilterDerivative(neuron.weightedSum);
+        }
+
+        protected void ModifyWeights()
+        {
+            this.ModifyWeightsOfOutputLayer();
+        }
+
+        protected void ModifyWeightsOfOutputLayer()
+        {
+            Neuron outputNeuron;
+            Synapse synapse;
+            for (int outputIndex = 0, nbNeurons = this.neuralNetwork.outputLayer.neurons.Count; outputIndex < nbNeurons; outputIndex++)
+            {
+                outputNeuron = this.neuralNetwork.outputLayer.neurons[outputIndex];
+                for (int synapseIndex = 0, nbSynapses = outputNeuron.dendrites.Count; synapseIndex < nbSynapses; synapseIndex++)
+                {
+                    synapse = outputNeuron.dendrites[synapseIndex];
+                    synapse.weight += this.learningRate * synapse.axon.outputValue * outputNeuron.gradient;
+                }
+            }
+        }
+
+        protected void ModifyWeightsOfHiddenLayers()
+        {
+            for (int layerIndex = this.neuralNetwork.hiddenLayers.Count - 1; layerIndex >= 0; layerIndex--)
+            {
+                this.ModifyWeightsOfHiddenLayer(this.neuralNetwork.hiddenLayers[layerIndex]);
+            }
+        }
+
+        protected void ModifyWeightsOfHiddenLayer(Layer hiddenLayer)
+        {
+            Neuron hiddenNeuron;
+            Synapse synapse;
+            for (int hiddenIndex = 0, nbNeurons = hiddenLayer.neurons.Count; hiddenIndex < nbNeurons; hiddenIndex++)
+            {
+                hiddenNeuron = hiddenLayer.neurons[hiddenIndex];
+                for (int synapseIndex = 0, nbSynapses = hiddenNeuron.dendrites.Count; synapseIndex < nbSynapses; synapseIndex++)
+                {
+                    synapse = hiddenNeuron.dendrites[synapseIndex];
+                    synapse.weight += this.learningRate * synapse.axon.outputValue * hiddenNeuron.gradient;
+                }
+            }
+        }
+
+        /* *** */
+
 
         protected void CalculateNeuralNetworkErrors(List<float> expectedOutputValues)
         {
