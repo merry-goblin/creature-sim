@@ -1,6 +1,8 @@
 ﻿
+using System;
 using System.Collections.Generic;
 using FeedForwardNeuralNetwork;
+using UnityEngine;
 
 namespace Learning.GradientDescent
 {
@@ -8,23 +10,46 @@ namespace Learning.GradientDescent
     {
         protected NeuralNetwork neuralNetwork;
         protected float learningRate;
+        protected float errorMaxAllowed;
+        protected int counter;
+        protected float errorMax;
 
-        public GradientDescentAlgorithm(NeuralNetwork neuralNetwork, float learningRate)
+        public GradientDescentAlgorithm(NeuralNetwork neuralNetwork, float learningRate, float errorMaxAllowed)
         {
             this.neuralNetwork = neuralNetwork;
             this.learningRate = learningRate;
+            this.errorMaxAllowed = errorMaxAllowed;
+            this.counter = 0;
         }
 
         public void Train(List<List<float>> inputValueSet, List<List<float>> expectedOutputValueSet)
         {
-            //  One loop is done on set of values but it should be more than that: this is a work in progress
+            for (int y = 0; y < 100000; y++)
+            {
+                this.errorMax = 0.0f;
+                //  One loop is done on set of values but it should be more than that: this is a work in progress
+                for (int i = 0, nb = inputValueSet.Count; i < nb; i++)
+                {
+                    List<float> inputValues = inputValueSet[i];
+                    List<float> expectedOutputValues = expectedOutputValueSet[i];
+
+                    this.FeedForward(inputValues);
+                    this.Backpropagation(expectedOutputValues);
+                }
+
+                if (this.errorMax < this.errorMaxAllowed)
+                {
+                    Debug.Log(String.Concat("Break: ", y));
+                    break;
+                }
+            }
+
             for (int i = 0, nb = inputValueSet.Count; i < nb; i++)
             {
-                List<float> inputValues = inputValueSet[i];
-                List<float> expectedOutputValues = expectedOutputValueSet[i];
-
-                this.FeedForward(inputValues);
-                this.Backpropagation(expectedOutputValues);
+                this.FeedForward(inputValueSet[i]);
+                this.DebugLog(String.Concat(" i1 => ", this.neuralNetwork.inputLayer.neurons[0].outputValue));
+                this.DebugLog(String.Concat(" i2 => ", this.neuralNetwork.inputLayer.neurons[1].outputValue));
+                this.DebugLog(String.Concat(" o1 => ", this.neuralNetwork.outputLayer.neurons[0].outputValue));
             }
         }
 
@@ -36,20 +61,25 @@ namespace Learning.GradientDescent
 
         protected void Backpropagation(List<float> expectedOutputValues)
         {
+            this.CalculateErrors(expectedOutputValues);
             this.CalculateGradients();
             this.ModifyWeights();
-            //this.CalculateNeuralNetworkErrors(expectedOutputValues);
-            //this.CorrectNeuralNetworkWeights();
+        }
 
-            /*//  Loop on each ouput neurons
+        protected void CalculateErrors(List<float> expectedOutputValues)
+        {
             Neuron outputNeuron;
-            for (int outputNeuronIndex = 0, nbOutputNeurons = this.neuralNetwork.outputLayer.neurons.Count; outputNeuronIndex < nbOutputNeurons; outputNeuronIndex++)
+            float absError = 0.0f;
+            for (int outputIndex = 0, nbNeurons = this.neuralNetwork.outputLayer.neurons.Count; outputIndex < nbNeurons; outputIndex++)
             {
-                outputNeuron = this.neuralNetwork.outputLayer.neurons[outputNeuronIndex];
-
-                this.CalculateError(outputNeuron, expectedOutputValues[outputNeuronIndex]);
-                this.Descend(outputNeuron);
-            }*/
+                outputNeuron = this.neuralNetwork.outputLayer.neurons[outputIndex];
+                outputNeuron.error = expectedOutputValues[outputIndex] - outputNeuron.outputValue;
+                absError = Math.Abs(outputNeuron.error);
+                if (absError > this.errorMax)
+                {
+                    this.errorMax = absError;
+                }
+            }
         }
 
         protected void CalculateGradients()
@@ -101,6 +131,7 @@ namespace Learning.GradientDescent
         protected void ModifyWeights()
         {
             this.ModifyWeightsOfOutputLayer();
+            this.ModifyWeightsOfHiddenLayers();
         }
 
         protected void ModifyWeightsOfOutputLayer()
@@ -141,81 +172,10 @@ namespace Learning.GradientDescent
             }
         }
 
-        /* *** */
-
-
-        protected void CalculateNeuralNetworkErrors(List<float> expectedOutputValues)
+        protected void DebugLog(string print)
         {
-            CalculateLayerErrors(this.neuralNetwork.outputLayer, expectedOutputValues);
-            for (int layerIndex = this.neuralNetwork.hiddenLayers.Count -1; layerIndex >= 0; layerIndex--)
-            {
-                CalculateDeepLayerErrors(this.neuralNetwork.hiddenLayers[layerIndex]);
-            }
-        }
-
-        protected void CalculateLayerErrors(Layer layer, List<float> expectedValues)
-        {
-            for (int neuronIndex = 0, nbNeurons = layer.neurons.Count; neuronIndex < nbNeurons; neuronIndex++)
-            {
-                this.CalculateNeuronError(layer.neurons[neuronIndex], expectedValues[neuronIndex]);
-            }
-        }
-
-        protected void CalculateNeuronError(Neuron neuron, float expectedValue)
-        {
-
-
-        }
-
-        protected void CalculateDeepLayerErrors(Layer layer)
-        {
-            for (int neuronIndex = 0, nbNeurons = layer.neurons.Count; neuronIndex < nbNeurons; neuronIndex++)
-            {
-                this.CalculateDeepNeuronError(layer.neurons[neuronIndex]);
-            }
-        }
-
-        protected void CalculateDeepNeuronError(Neuron neuron)
-        {
-
-
-        }
-
-        protected void CorrectNeuralNetworkWeights()
-        {
-
-        }
-
-        protected void CalculateError(Neuron neuron, float expectedValue)
-        {
-            float activationDerivative = neuron.activation.UnfilterDerivative(neuron.weightedSum);
-            float difference = expectedValue - neuron.outputValue;
-
-            neuron.error = activationDerivative* neuron.weightedSum * difference;
-        }
-
-        protected void Descend(Neuron neuron)
-        {
-            Synapse synapse;
-            Neuron neuronOfPreviousLayer;
-            for (int synapseIndex = 0, nbSynapses = neuron.dendrites.Count; synapseIndex < nbSynapses; synapseIndex++)
-            {
-                synapse = neuron.dendrites[synapseIndex];
-                this.UpdateNeuronWeightWithError(synapse, neuron.error); // Update synapse weight
-
-                neuronOfPreviousLayer = synapse.axon;
-                float deepError = this.CalculateDeepError(neuron, neuron.error);
-            }
-        }
-
-        protected void UpdateNeuronWeightWithError(Synapse synapse, float error)
-        {
-            synapse.weight -= this.learningRate * error * synapse.axon.outputValue;
-        }
-
-        protected float CalculateDeepError(Neuron neuron, float error)
-        {
-            return 0.0f;
+            this.counter++;
+            Debug.Log(String.Concat(this.counter, print));
         }
 
     }
