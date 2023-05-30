@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -17,7 +18,44 @@ public class LearnXORByRetropropagationScript : MonoBehaviour
         float learningRate = 0.1f;
         this.algorithm = new GradientDescentAlgorithm(neuralNetwork, learningRate);
 
-        //  todo
+        //  Train
+        List<List<float>> inputValueSet = this.fillInputValues();
+        List<List<float>> expectedOutputValueSet = this.fillOutputValues();
+
+        Debug.Log(String.Join(", ", neuralNetwork.ExportWeights()));
+        this.algorithm.Train(inputValueSet, expectedOutputValueSet);
+        Debug.Log(String.Join(", ", neuralNetwork.ExportWeights()));
+    }
+
+    private List<List<float>> fillInputValues()
+    {
+        float[,] input = new float[4,2] { { 0.0f, 0.0f }, { 0.0f, 1.0f }, { 1.0f, 0.0f }, { 1.0f, 1.0f } };
+
+        List<List<float>> inputValueSet = new List<List<float>>();
+        List<float> inputList;
+        for (int i = 0; i< 4; i++) {
+            inputList = new List<float>();
+            inputList.Add(input[i, 0]);
+            inputList.Add(input[i, 1]);
+            inputValueSet.Add(inputList);
+        }
+        
+        return inputValueSet;
+    }
+
+    private List<List<float>> fillOutputValues()
+    {
+        float[,] output = new float[4,1] { { 0.0f }, { 1.0f }, { 1.0f }, { 0.0f } };
+
+        List<List<float>> expectedOutputValueSet = new List<List<float>>();
+        List<float> outputList;
+        for (int i = 0; i< 4; i++) {
+            outputList = new List<float>();
+            outputList.Add(output[i, 0]);
+            expectedOutputValueSet.Add(outputList);
+        }
+        
+        return expectedOutputValueSet;
     }
 
     // Update is called once per frame
