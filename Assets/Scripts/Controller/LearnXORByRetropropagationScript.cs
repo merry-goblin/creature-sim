@@ -16,8 +16,10 @@ public class LearnXORByRetropropagationScript : MonoBehaviour
         bool initSynaspesRandomly = true;
         NeuralNetwork neuralNetwork = new NeuralNetwork(2, 1, 1, 2, initSynaspesRandomly, ref activation);
         float learningRate = 5.0f;
-        float errorMaxAllowed = 0.4f;
-        this.algorithm = new GradientDescentAlgorithm(neuralNetwork, learningRate, errorMaxAllowed);
+        float errorMaxAllowed = 0.1f;
+        float learningReductingRate = 0.1f;
+        int nbIterationsToReduce = 25;
+        this.algorithm = new GradientDescentAlgorithm(neuralNetwork, learningRate, errorMaxAllowed, learningReductingRate, nbIterationsToReduce);
 
         //  Train
         List<List<float>> inputValueSet = this.fillInputValues();

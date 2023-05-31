@@ -11,14 +11,21 @@ namespace Learning.GradientDescent
         protected NeuralNetwork neuralNetwork;
         protected float learningRate;
         protected float errorMaxAllowed;
+        protected float learningReductingRate;
+        protected float nbIterationsToReduce;
+
         protected int counter;
+        protected int decreaseCounter;
         protected float errorMax;
 
-        public GradientDescentAlgorithm(NeuralNetwork neuralNetwork, float learningRate, float errorMaxAllowed)
+        public GradientDescentAlgorithm(NeuralNetwork neuralNetwork, float learningRate, float errorMaxAllowed, float learningReductingRate, int nbIterationsToReduce)
         {
             this.neuralNetwork = neuralNetwork;
             this.learningRate = learningRate;
             this.errorMaxAllowed = errorMaxAllowed;
+            this.learningReductingRate = learningReductingRate;
+            this.nbIterationsToReduce = nbIterationsToReduce;
+
             this.counter = 0;
         }
 
@@ -42,6 +49,8 @@ namespace Learning.GradientDescent
                     Debug.Log(String.Concat("Break: ", y));
                     break;
                 }
+
+                this.DecreaseLearningRate();
             }
 
             for (int i = 0, nb = inputValueSet.Count; i < nb; i++)
@@ -170,6 +179,16 @@ namespace Learning.GradientDescent
                     synapse.weight += this.learningRate * synapse.axon.outputValue * hiddenNeuron.gradient;
                 }
             }
+        }
+
+        protected void DecreaseLearningRate()
+        {
+        	this.decreaseCounter++;
+        	if (this.decreaseCounter >= this.nbIterationsToReduce)
+        	{
+        		this.decreaseCounter = 0;
+        		this.learningRate -= this.learningRate * learningReductingRate;
+        	}
         }
 
         protected void DebugLog(string print)
