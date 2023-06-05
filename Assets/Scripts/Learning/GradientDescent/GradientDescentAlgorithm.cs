@@ -187,7 +187,7 @@ namespace Learning.GradientDescent
         	if (this.decreaseCounter >= this.nbIterationsToReduce)
         	{
         		this.decreaseCounter = 0;
-        		this.learningRate -= this.learningRate * learningReductingRate;
+        		this.learningRate = this.learningRate * this.learningReductingRate;
         	}
         }
 
